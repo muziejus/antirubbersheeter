@@ -1,4 +1,4 @@
-/* global L */
+/* global hljs, L, demodata */
 $( document ).ready(() => {
 
   $("#uploadform").submit((e) => {
@@ -32,18 +32,32 @@ $( document ).ready(() => {
     });
   });
 
+  if($("#demomap").length > 0){
+    const map = L.map("demomap", {
+      crs: L.CRS.Simple,
+      minZoom: -5
+    });
+    const bounds = [[0,0], [demodata.height, demodata.width]];
+    L.imageOverlay(demodata.imgururl, bounds).addTo(map);
+    map.fitBounds(bounds);
+    demodata.places.forEach((p) => {
+      L.marker([p.y, p.x]).bindPopup(p.name).addTo(map);
+    });
+  }
+
+
+
   if($("#data").length > 0){
     let data = {};
     let counter = -1;
     Object.keys($("#data").data()).forEach((k) => {
       data[k] = $("#data").data(k);
     });
-    var map = L.map("map", {
+    const map = L.map("map", {
       crs: L.CRS.Simple,
       minZoom: -5
     });
-    // const bounds = [[0,0], [data.height, data.height]];
-    const bounds = [[0,0], [2598,2126]];
+    const bounds = [[0,0], [data.height, data.width]];
     L.imageOverlay(data.imgururl, bounds).addTo(map);
     map.fitBounds(bounds);
     const marker = L.marker([0,0]).setOpacity(0).addTo(map);
@@ -54,14 +68,28 @@ $( document ).ready(() => {
     $("#geocodingbtn").click(function(){
       marker.setOpacity(0);
       if(counter === data.places.length - 1){
+        data.places[counter].y = parseInt($("#y").text());
+        data.places[counter].x = parseInt($("#x").text());
         $("#carddiv").html("<p class='card-text'><strong>All done!</strong></p>");
+        $("code.json").text(JSON.stringify(data, null, 2));
+        $("pre code").each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
         $(".card-title").text("Geocoder");
-        $("#geocodingbtn").text("Show data");
-        // Fill the modal and show it.
+        $("#geocodingbtn").text("Done").attr("disabled", "true");
+        $("#datamodal").modal("show");
+        $("#openmap").click(() => {
+          $("#map").css("cursor", "");
+          marker.remove();
+          $("#datamodal").modal("hide");
+          data.places.forEach((p) => {
+            L.marker([p.y, p.x]).bindPopup(p.name).addTo(map);
+          });
+        });
       } else {
         if(counter >= 0){
-          data.places[counter].y = $("#y").text();
-          data.places[counter].x = $("#x").text();
+          data.places[counter].y = parseInt($("#y").text());
+          data.places[counter].x = parseInt($("#x").text());
         }
         $("#carddiv").html("<div class='row'><div class='col-6'><em>y</em>: <span id='y'></span></div><div class='col-6'><em>x</em>: <span id='x'></span></div></div>");
         $(".card-title").text("Geocoding " + (counter + 2) + " of " + data.places.length + " places");
@@ -76,6 +104,5 @@ $( document ).ready(() => {
       }
     });
   }
-
 });
 

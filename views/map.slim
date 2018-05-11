@@ -6,4 +6,17 @@
       p.card-text &nbsp;
     button#geocodingbtn.btn.btn-primary Start Geocoding
 data#data.d-none data-width=@width data-height=@height data-imgururl=@imgururl data-placesstring=@places
+#datamodal.modal.fade tabindex="-1" role="dialog" aria-labelledby="datamodaltitle" aria-hidden="true"
+  .modal-dialog.modal-lg role="document"
+    .modal-content
+      .modal-header
+        h5.modal-title#datamodaltitle Your Saved Data
+        button.close type="button" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true" &times;
+      .modal-body
+        p Be certain to copy and paste this data to a json file, as no copy is saved on our servers.
+        pre
+          code.json
+      .modal-footer
+        button#openmap.btn.btn-primary type="button" Open Data as Map
 

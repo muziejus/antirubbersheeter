@@ -25,19 +25,25 @@ class App < Sinatra::Base
       f.write(tmpfile.read)
     end
     dimensions = Dimensions.dimensions("data/#{filename}")
-    imgur_url = "https://i.imgur.com/v4q0RmO.jpg"
-    # imgur_url = upload_image filename
-    # unless imgur_url
-    #   refresh_token
-    #   imgur_url = upload_image filename
-    # end
+    imgur_url = upload_image filename
+    unless imgur_url
+      refresh_token
+      imgur_url = upload_image filename
+    end
     { filename: filename, imgururl: imgur_url, width: dimensions[0], height: dimensions[1] }.to_json
   end
 
   get '/map' do
-    @imgururl = "./yok.jpg"
-    @places = "Sutpen's Hundred, Belle Mitchell's, Varner's Store, Sartoris Plantation"
-    slim :map, layout: :layout
+    # If your image doesn’t upload to imgur, you can fill in the instance
+    # variables commented out here and comment out the redirect
+    # in order to have everything work from your local computer. see README
+    # for details
+    # @imgururl = "location/of/file/in/public/directory.jpg"
+    # @width = width_of_image
+    # @height = height_of_image
+    # @places = "comma, separated, list, of, places"
+    # slim :map, layout: :layout
+    redirect '/'
   end
 
   post '/map' do
@@ -47,5 +53,9 @@ class App < Sinatra::Base
     @places = params[:places]
     slim :map, layout: :layout
   end
-  
+
+  get '/demo-map' do
+    slim :demo_map, layout: :layout
+  end
+
 end
