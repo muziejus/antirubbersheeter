@@ -28,4 +28,13 @@
           .d-flex.justify-content-end
             <button disabled aria-disabled="true" id="geocodebtn" class="btn btn-primary align-self-end" type="submit">Geocode</button>
     footer.footer
-      <p><small>© 2018, <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> by <a href="http://moacir.com"> Moacir P. de Sá Pereira</a> (<a href="http://twitter.com/muziejus">@muziejus</a>)</p>
+      <p><small>© 2018, <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> by <a href="http://moacir.com"> Moacir P. de Sá Pereira</a> (<a href="http://twitter.com/muziejus">@muziejus</a>) | <a href="#" data-toggle="modal" data-target="#aboutmodal">About</a> | <a href="/demo-map" target="_blank">Demo Map</a>
+#aboutmodal.modal.fade tabindex="-1" role="dialog" aria-labelledby="aboutmodaltitle" aria-hidden="true"
+  .modal-dialog.modal-lg role="document"
+    .modal-content
+      .modal-header
+        h5.modal-title#aboutmodaltitle About the Antirubbersheeter
+        button.close type="button" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true" &times;
+      .modal-body
+        p hi.
