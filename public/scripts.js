@@ -2,7 +2,6 @@
 $( document ).ready(() => {
 
   $("#uploadform").submit((e) => {
-    console.log("Uploading");
     e.preventDefault();
     const data = new FormData();
     data.append("file", $("#file").get(0).files[0]);
@@ -15,29 +14,32 @@ $( document ).ready(() => {
       success: function(d){
         d = JSON.parse(d);
         if(d.error){
-          $("#error").removeClass("d-none").addClass("d-block");
-          $("#error > p").html(d.error + " Reload and try again.");
+          $("#result").removeClass("invisible").addClass("visible").addClass("alert-danger");
+          $("#result > p").html(d.error + " Reload and try again.");
         } else {
-          $("#nowGeocode").removeClass("d-none").addClass("d-block");
+          $("#result").removeClass("invisible").addClass("visible").addClass("alert-success");
+          $("#result > p").html("Upload succeeded. Now geocode →");
           $("#uploadbtn").attr("disabled", true);
           $("#geocodebtn").attr("disabled", false);
+          // This is a goofy way to do this… but it works?
           $("#filename").attr("value", d.filename);
-          $("#imgurUrl").attr("value", d.imgurUrl);
+          $("#imgururl").attr("value", d.imgururl);
+          $("#width").attr("value", d.width);
+          $("#height").attr("value", d.height);
           return d;
         }
-      },
-      complete: function(){
       }
     });
   });
 
-  if($("#mapimage").length > 0){
+  if($("#data").length > 0){
     var map = L.map("map", {
       crs: L.CRS.Simple,
       minZoom: -5
     });
+    // const bounds = [[0,0], [$("#data").data("height"),$("#data").data("height")]];
     const bounds = [[0,0], [2598,2126]];
-    L.imageOverlay($("#mapimage").text(), bounds).addTo(map);
+    L.imageOverlay($("#data").data("imgururl"), bounds).addTo(map);
     map.fitBounds(bounds);
   }
 

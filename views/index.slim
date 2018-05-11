@@ -1,5 +1,5 @@
 .d-flex.align-items-center.h-100
-  .jumbotron.justify-content-center.mx-auto.w-75
+  .jumbotron.pb-3.justify-content-center.mx-auto.w-75
     h1.display-2 Antirubbersheeter
 
     p.lead Geocode your data using a
@@ -12,30 +12,20 @@
             label for="file" Upload your map’s image 
             input type="file" class="form-control-file" id="file"
           button#uploadbtn.mb-3.btn.btn-block.btn-primary type="submit" Upload 
-        #error.alert.alert-danger.d-none
-          p.m-0 Error.
-        #nowGeocode.alert.alert-success.d-none
-          p.m-0 Upload succeeded. Now geocode →
+        #result.invisible.alert
+          p.m-0 Result.<br>Result.
       .col-8
         h2 Next:
-        form#geocodeform
+        form#geocodeform action="/map" method="POST"
           .form-group
             label for="places" Paste in places you want to geocode, separated by commas
-            textarea.form-control#places rows="3" placeholder="Sutpen's Hundred, Belle Mitchell's, Varner's Store, Sartoris Plantation…"
+            textarea.form-control#places rows="3" name="places" placeholder="Sutpen's Hundred, Belle Mitchell's, Varner's Store, Sartoris Plantation…"
           .form-group
-            input type="hidden" id="filename" value=""
-            input type="hidden" id="imgurUrl" value=""
+            input type="hidden" id="filename" name="filename" value=""
+            input type="hidden" id="imgururl" name="imgururl" value=""
+            input type="hidden" id="width" name="width" value=""
+            input type="hidden" id="height" name="height" value=""
           .d-flex.justify-content-end
             <button disabled aria-disabled="true" id="geocodebtn" class="btn btn-primary align-self-end" type="submit">Geocode</button>
-/        .progress.mb-3
-/          .progress-bar role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'
-/        #error.alert.alert-danger.d-none
-/          p.m-0 Error.
-/        #uploadAlert.alert.alert-secondary
-/          p.m-0.text-muted 1. Upload file.
-/        #tileAlert.alert.alert-secondary
-/          p.m-0.text-muted 2. Create tiles.
-/        #wetransferAlert.alert.alert-secondary
-/          p.m-0.text-muted 3. Upload project to WeTransfer.
     footer.footer
       <p><small>© 2018, <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> by <a href="http://moacir.com"> Moacir P. de Sá Pereira</a> (<a href="http://twitter.com/muziejus">@muziejus</a>)</p>

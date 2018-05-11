@@ -3,6 +3,7 @@
 require "sinatra/base"
 require "slim"
 require "./imgur"
+require "dimensions"
 
 class App < Sinatra::Base
 
@@ -23,17 +24,26 @@ class App < Sinatra::Base
     File.open("data/#{filename}", "wb") do |f|
       f.write(tmpfile.read)
     end
+    dimensions = Dimensions.dimensions("data/#{filename}")
     imgur_url = "https://i.imgur.com/v4q0RmO.jpg"
     # imgur_url = upload_image filename
     # unless imgur_url
     #   refresh_token
     #   imgur_url = upload_image filename
     # end
-    { filename: filename, imgurUrl: imgur_url }.to_json
+    { filename: filename, imgururl: imgur_url, width: dimensions[0], height: dimensions[1] }.to_json
   end
 
   get '/map' do
-    @map_image = "./yok.jpg"
+    @imgururl = "./yok.jpg"
+    slim :map, layout: :layout
+  end
+
+  post '/map' do
+    @imgururl = params[:imgururl]
+    @width = params[:width]
+    @height = params[:height]
+    @places = params[:places]
     slim :map, layout: :layout
   end
   

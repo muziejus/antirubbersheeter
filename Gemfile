@@ -4,7 +4,7 @@ ruby '2.3.1'
 
 gem 'sinatra'
 gem 'slim'
-gem 'rmagick'
+gem 'dimensions'
 gem 'httparty'
 gem 'dotenv'
 gem 'shotgun'
