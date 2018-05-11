@@ -33,14 +33,48 @@ $( document ).ready(() => {
   });
 
   if($("#data").length > 0){
+    let data = {};
+    let counter = -1;
+    Object.keys($("#data").data()).forEach((k) => {
+      data[k] = $("#data").data(k);
+    });
     var map = L.map("map", {
       crs: L.CRS.Simple,
       minZoom: -5
     });
-    // const bounds = [[0,0], [$("#data").data("height"),$("#data").data("height")]];
+    // const bounds = [[0,0], [data.height, data.height]];
     const bounds = [[0,0], [2598,2126]];
-    L.imageOverlay($("#data").data("imgururl"), bounds).addTo(map);
+    L.imageOverlay(data.imgururl, bounds).addTo(map);
     map.fitBounds(bounds);
+    const marker = L.marker([0,0]).setOpacity(0).addTo(map);
+    data.places = data.placesstring.split(",").map((i) => {
+      return { name: i.trim() };
+    });
+    $(".card-text").text("Click below to start placing the list of " + data.places.length + " places on the map.");
+    $("#geocodingbtn").click(function(){
+      marker.setOpacity(0);
+      if(counter === data.places.length - 1){
+        $("#carddiv").html("<p class='card-text'><strong>All done!</strong></p>");
+        $(".card-title").text("Geocoder");
+        $("#geocodingbtn").text("Show data");
+        // Fill the modal and show it.
+      } else {
+        if(counter >= 0){
+          data.places[counter].y = $("#y").text();
+          data.places[counter].x = $("#x").text();
+        }
+        $("#carddiv").html("<div class='row'><div class='col-6'><em>y</em>: <span id='y'></span></div><div class='col-6'><em>x</em>: <span id='x'></span></div></div>");
+        $(".card-title").text("Geocoding " + (counter + 2) + " of " + data.places.length + " places");
+        $("#geocodingbtn").text("Save " + data.places[counter + 1].name);
+        $("#map").css("cursor", "crosshair");
+        map.on("click", (e) => {
+          marker.setLatLng(e.latlng).setOpacity(0.9);
+          $("#y").text(e.latlng.lat);
+          $("#x").text(e.latlng.lng);
+        });
+        counter = counter + 1;
+      }
+    });
   }
 
 });

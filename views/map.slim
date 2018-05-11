@@ -1,2 +1,9 @@
 #map style="height: 100%"
-data#data.d-none data-width=@width data-height=@height data-imgururl=@imgururl data-places=@places
+.card.w-25 style="position: absolute; right: 20px; top: 20px; z-index: 1000; background: rgba(255,255,255,0.8);"
+  .card-body
+    h5.card-title Geocoder
+    #carddiv.mb-3
+      p.card-text &nbsp;
+    button#geocodingbtn.btn.btn-primary Start Geocoding
+data#data.d-none data-width=@width data-height=@height data-imgururl=@imgururl data-placesstring=@places
+

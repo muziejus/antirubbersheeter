@@ -36,6 +36,7 @@ class App < Sinatra::Base
 
   get '/map' do
     @imgururl = "./yok.jpg"
+    @places = "Sutpen's Hundred, Belle Mitchell's, Varner's Store, Sartoris Plantation"
     slim :map, layout: :layout
   end
 
