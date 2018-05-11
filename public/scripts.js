@@ -2,6 +2,7 @@
 $( document ).ready(() => {
 
   $("#uploadform").submit((e) => {
+    console.log("Uploading");
     e.preventDefault();
     const data = new FormData();
     data.append("file", $("#file").get(0).files[0]);
@@ -15,8 +16,13 @@ $( document ).ready(() => {
         d = JSON.parse(d);
         if(d.error){
           $("#error").removeClass("d-none").addClass("d-block");
-          $("#error > p").html(d.error);
+          $("#error > p").html(d.error + " Reload and try again.");
         } else {
+          $("#nowGeocode").removeClass("d-none").addClass("d-block");
+          $("#uploadbtn").attr("disabled", true);
+          $("#geocodebtn").attr("disabled", false);
+          $("#filename").attr("value", d.filename);
+          $("#imgurUrl").attr("value", d.imgurUrl);
           return d;
         }
       },

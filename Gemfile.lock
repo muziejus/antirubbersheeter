@@ -2,6 +2,9 @@ GEM
   remote: http://rubygems.org/
   specs:
     dotenv (2.4.0)
+    httparty (0.16.2)
+      multi_xml (>= 0.5.2)
+    multi_xml (0.6.0)
     mustermann (1.0.2)
     puma (3.11.4)
     rack (2.0.5)
@@ -26,6 +29,7 @@ PLATFORMS
 
 DEPENDENCIES
   dotenv
+  httparty
   puma
   rmagick
   shotgun

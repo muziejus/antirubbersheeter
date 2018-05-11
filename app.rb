@@ -2,6 +2,7 @@
 
 require "sinatra/base"
 require "slim"
+require "./imgur"
 
 class App < Sinatra::Base
 
@@ -11,7 +12,7 @@ class App < Sinatra::Base
 
   post '/upload' do
     if params[:file] == "undefined"
-      return { error: "No file selected" }.to_json
+      return { error: "No file selected." }.to_json
     end
     unless params[:file] &&
       (tmpfile = params[:file][:tempfile]) &&
@@ -22,7 +23,13 @@ class App < Sinatra::Base
     File.open("data/#{filename}", "wb") do |f|
       f.write(tmpfile.read)
     end
-    { filename: filename }.to_json
+    imgur_url = "https://i.imgur.com/v4q0RmO.jpg"
+    # imgur_url = upload_image filename
+    # unless imgur_url
+    #   refresh_token
+    #   imgur_url = upload_image filename
+    # end
+    { filename: filename, imgurUrl: imgur_url }.to_json
   end
 
   get '/map' do
