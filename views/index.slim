@@ -3,7 +3,7 @@
     h1.display-2 Antirubbersheeter
 
     p.lead Geocode your data using a
-      <a href="http://leafletjs.com">Leaflet</a>-friendly basemap created from your non-Cartesian / fictional / etc. map.
+      <a href="http://leafletjs.com">Leaflet</a>-friendly basemap created from your non-Mercator / fictional / etc. map.
     .row
       .col-4
         h2 First:
@@ -28,7 +28,7 @@
           .d-flex.justify-content-end
             <button disabled aria-disabled="true" id="geocodebtn" class="btn btn-primary align-self-end" type="submit">Geocode</button>
     footer.footer
-      <p><small>© 2018, <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> by <a href="http://moacir.com"> Moacir P. de Sá Pereira</a> (<a href="http://twitter.com/muziejus">@muziejus</a>) | <a href="#" data-toggle="modal" data-target="#aboutmodal">About</a> | <a href="/demo-map" target="_blank">Demo Map</a>
+      <p><small>© 2018, <a href="http://moacir.com"> Moacir P. de Sá Pereira</a> (<a href="http://twitter.com/muziejus"><i class="fab fa-twitter"></i> @muziejus</a>) | <a href="#" data-toggle="modal" data-target="#aboutmodal">About</a> | <a href="/demo-map" target="_blank">Demo Map</a>
 #aboutmodal.modal.fade tabindex="-1" role="dialog" aria-labelledby="aboutmodaltitle" aria-hidden="true"
   .modal-dialog.modal-lg role="document"
     .modal-content
@@ -37,4 +37,50 @@
         button.close type="button" data-dismiss="modal" aria-label="Close"
           span aria-hidden="true" &times;
       .modal-body
-        p hi.
+        markdown:
+
+          The Antirubbersheeter exists in implicit critique of the tendency to
+          “[georectify](https://support.esri.com/en/other-resources/gis-dictionary/term/georectification)”
+          maps to fit into the [Web
+          Mercator](https://en.wikipedia.org/wiki/Web_Mercator) projection, as
+          though that’s the “cor<em>rect</em>,” in some way, a “faulty” map. As
+          Johanna Drucker reminds us, “the greater intellectual challenge is to
+          create spatial representations without referencing a pre-existing
+          ground.”[^1] Doing so turns space into a surface, “continuous and given,”
+          as Doreen Massey notes.[^2]
+
+          Instead, we should follow Massey’s lead and remember that space is as
+          a place always “under construction,” and, as such, as one where
+          taking a representaion of space and “rectifying” it does violence to
+          the way the creators of the representation chose to distribute items
+          in space.[^3]
+
+          Hence the Antirubbersheeter ([<i class="fab fa-github"></i>
+          @muziejus/antirubbersheeter](https://github.com/muziejus/antirubbersheeter)),
+          which aims to provide the usability of a web framework like
+          [Leaflet](http://leafletjs.com) but letting the representation itself
+          determine its coordinate scheme. Of course, that scheme remains
+          Cartesian, but computers have limitations. 
+
+          The Antirubbersheeter lets you upload an image, which is subsequently
+          copied over to [Imgur](http://imgur.com), which subsequently hosts
+          the image. Additionally, you add a comma-separated list of places you
+          would like to locate on the map and start the geocoder.
+
+          The page now becomes a familiar Leaflet map, but with your image in
+          the center. Here, you are prompted to place markers for each place
+          you included in your earlier list. Once all the places have been
+          recorded (click to place a marker, click the button to advance), a
+          modal will open with your dataset presented in JSON. You should copy
+          and save that object for later use in your own Leaflet projects, or
+          whatever.
+
+          See the [GitHub
+          README](https://github.com/muziejus/antirubbersheeter) if you want to
+          build your dataset locally on your computer and not use Imgur.
+
+          [^1]: Drucker, _Graphesis_ (Cambridge, MA: Harvard UP, 2014), 77.
+
+          [^2]: Massey, _For Sapce_ (London: SAGE, 2005), 4.
+
+          [^3]: Ibid., 9.
