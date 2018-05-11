@@ -1,0 +1,24 @@
+h1.display-2 Antirubbersheeter
+
+p.lead Create a 
+  <a href="http://leafletjs.com">Leaflet</a>-friendly basemap out of your ancient / non-Cartesian / fictional / etc. map.
+.row
+  .col-6
+    h2 First:
+    form#uploadform enctype="multipart/form-data"
+      .form-group
+        label for="file" Upload your map’s image 
+        input type="file" class="form-control-file" id="file"
+      button#uploadbtn.btn.btn-primary type="submit" Upload
+  .col-6
+    h2 Next:
+    .progress.mb-3
+      .progress-bar role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'
+    #error.alert.alert-danger.d-none
+      p.m-0 Error.
+    #uploadAlert.alert.alert-secondary
+      p.m-0.text-muted 1. Upload file.
+    #tileAlert.alert.alert-secondary
+      p.m-0.text-muted 2. Create tiles.
+    #wetransferAlert.alert.alert-secondary
+      p.m-0.text-muted 3. Upload project to WeTransfer.

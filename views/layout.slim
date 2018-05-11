@@ -1,0 +1,31 @@
+doctype html
+html lang="en-US"
+  head
+    meta charset="utf-8"
+    meta content="IE=edge" http-equiv="X-UA-Compatible" 
+    meta content="width=device-width, initial-scale=1" name="viewport" 
+    meta property="og:type" content="website" 
+    meta property="og:title" content="Antirubbersheeter" 
+    meta property="og:description" content="A tool to build Leaflet Maps without Web Mercator" 
+    meta name="twitter:description" content="A tool to build Leaflet Maps without Web Mercator" 
+    meta name="twitter:card" content="summary" 
+    meta name="twitter:creator" content="@muziejus" 
+    meta name="twitter:title" content="Antirubbersheeter" 
+    title Antirubbersheeter
+    link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"
+
+  body.h-100
+    main.h-100
+      .d-flex.align-items-center.h-100
+        .jumbotron.justify-content-center.mx-auto.w-75
+
+          == yield
+
+          footer.p-3.footer
+            <p><small> © 2018, <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> by <a href="http://moacir.com"> Moacir P. de Sá Pereira</a> (<a href="http://twitter.com/muziejus">@muziejus</a>)</p>
+    script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"
+    script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"
+    script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"
+    script src="scripts.js"
+    javascript:
+      $("html").css("height", "100%");
