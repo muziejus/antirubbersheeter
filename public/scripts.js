@@ -1,10 +1,7 @@
+/* global L */
 $( document ).ready(() => {
 
   $("#uploadform").submit((e) => {
-    $(".progress-bar").addClass("progress-bar-animated").addClass("progress-bar-striped");
-    ["upload", "tile", "wetransfer"].forEach((i) => {
-      yellowUp("#" + i + "Alert");
-    });
     e.preventDefault();
     const data = new FormData();
     data.append("file", $("#file").get(0).files[0]);
@@ -20,23 +17,23 @@ $( document ).ready(() => {
           $("#error").removeClass("d-none").addClass("d-block");
           $("#error > p").html(d.error);
         } else {
-          greenUp("#uploadAlert");
+          return d;
         }
       },
       complete: function(){
-        // $(".progress-bar").removeClass("progress-bar-animated").removeClass("progress-bar-striped");
       }
     });
   });
 
+  if($("#mapimage").length > 0){
+    var map = L.map("map", {
+      crs: L.CRS.Simple,
+      minZoom: -5
+    });
+    const bounds = [[0,0], [2598,2126]];
+    L.imageOverlay($("#mapimage").text(), bounds).addTo(map);
+    map.fitBounds(bounds);
+  }
+
 });
 
-function yellowUp(target){
-  $( target ).removeClass("alert-secondary").addClass("alert-warning");
-  $( target + " > p").removeClass("text-muted");
-}
-
-function greenUp(target){
-  $( target ).removeClass("alert-warning").addClass("alert-success");
-  $( target + " > p").append("✔");
-}

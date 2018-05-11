@@ -1,24 +1,38 @@
-h1.display-2 Antirubbersheeter
+.d-flex.align-items-center.h-100
+  .jumbotron.justify-content-center.mx-auto.w-75
+    h1.display-2 Antirubbersheeter
 
-p.lead Create a 
-  <a href="http://leafletjs.com">Leaflet</a>-friendly basemap out of your ancient / non-Cartesian / fictional / etc. map.
-.row
-  .col-6
-    h2 First:
-    form#uploadform enctype="multipart/form-data"
-      .form-group
-        label for="file" Upload your map’s image 
-        input type="file" class="form-control-file" id="file"
-      button#uploadbtn.btn.btn-primary type="submit" Upload
-  .col-6
-    h2 Next:
-    .progress.mb-3
-      .progress-bar role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'
-    #error.alert.alert-danger.d-none
-      p.m-0 Error.
-    #uploadAlert.alert.alert-secondary
-      p.m-0.text-muted 1. Upload file.
-    #tileAlert.alert.alert-secondary
-      p.m-0.text-muted 2. Create tiles.
-    #wetransferAlert.alert.alert-secondary
-      p.m-0.text-muted 3. Upload project to WeTransfer.
+    p.lead Geocode your data using a
+      <a href="http://leafletjs.com">Leaflet</a>-friendly basemap created from your non-Cartesian / fictional / etc. map.
+    .row
+      .col-4
+        h2 First:
+        form#uploadform enctype="multipart/form-data"
+        .form-group
+          label for="file" Upload your map’s image 
+          input type="file" class="form-control-file" id="file"
+        .d-flex.justify-content-end
+          button#uploadbtn.btn.btn-primary.align-self-end type="submit" Upload 
+        .alert.alert-success.d-none
+          p.m-0 Upload succeeded. Now geocode →
+      .col-8
+        h2 Next:
+        form#geocodeform
+          .form-group
+            label for="places" Paste in places you want to geocode, separated by commas
+            input type="hidden" id="filename" value=""
+            textarea.form-control#places rows="3" placeholder="Sutpen's Hundred, Belle Mitchell's, Varner's Store, Sartoris Plantation…"
+          .d-flex.justify-content-end
+            <button disabled id="geocodebtn" class="btn btn-primary align-self-end" type="submit">Geocode</button>
+/        .progress.mb-3
+/          .progress-bar role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'
+/        #error.alert.alert-danger.d-none
+/          p.m-0 Error.
+/        #uploadAlert.alert.alert-secondary
+/          p.m-0.text-muted 1. Upload file.
+/        #tileAlert.alert.alert-secondary
+/          p.m-0.text-muted 2. Create tiles.
+/        #wetransferAlert.alert.alert-secondary
+/          p.m-0.text-muted 3. Upload project to WeTransfer.
+    footer.footer
+      <p><small>© 2018, <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> by <a href="http://moacir.com"> Moacir P. de Sá Pereira</a> (<a href="http://twitter.com/muziejus">@muziejus</a>)</p>
