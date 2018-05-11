@@ -29,7 +29,7 @@ If you want to avoid using Imgur / uploading / etc.:
 
 ```ruby
 get '/map' do
-	@imgururl = "public/some-img.jpg"
+	@imgururl = "your-image.jpg"
 	@width = 2560 # or whatever the width of the image is
 	@height = 1200 # same
 	@places = "List, Of, Places, We, Want, To Geocode"
