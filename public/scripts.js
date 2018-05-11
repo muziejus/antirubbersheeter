@@ -77,6 +77,7 @@ $( document ).ready(() => {
         });
         $(".card-title").text("Geocoder");
         $("#geocodingbtn").text("Done").attr("disabled", "true");
+        $("#geocoder").addClass("d-none");
         $("#datamodal").modal("show");
         $("#openmap").click(() => {
           $("#map").css("cursor", "");
