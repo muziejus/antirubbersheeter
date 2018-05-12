@@ -3,6 +3,7 @@ $( document ).ready(() => {
 
   $("#uploadform").submit((e) => {
     e.preventDefault();
+    $("#result").removeClass("invisible").addClass("visible").removeClass("alert-danger").html("<div class='py-3'><div class='progress my-3'><div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div><p>Uploading file…</p></div>");
     const data = new FormData();
     data.append("file", $("#file").get(0).files[0]);
     $.ajax({
@@ -14,11 +15,14 @@ $( document ).ready(() => {
       success: function(d){
         d = JSON.parse(d);
         if(d.error){
-          $("#result").removeClass("invisible").addClass("visible").addClass("alert-danger");
-          $("#result > p").html(d.error + " Reload and try again.");
+          $("#result").addClass("alert").addClass("alert-danger").html(d.error + " Reload and try again.");
         } else {
-          $("#result").removeClass("invisible").addClass("visible").addClass("alert-success");
-          $("#result > p").html("Upload succeeded. Now geocode →");
+          $("#result").addClass("alert").removeClass("alert-danger");
+          if(d.filesize < 10){
+            $("#result").addClass("alert-success").html("Upload succeeded. Now geocode →");
+          } else {
+            $("#result").addClass("alert-warning").html("Your file’s over 10Mb, so this may not work. See the <a href='http://github.com/muziejus/antirubbersheeter'>README</a> for running a local instance. A more useful solution for large files is coming. But continue →");
+          }
           $("#uploadbtn").attr("disabled", true);
           $("#geocodebtn").attr("disabled", false);
           // This is a goofy way to do this… but it works?

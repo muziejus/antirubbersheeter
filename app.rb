@@ -25,12 +25,13 @@ class App < Sinatra::Base
       f.write(tmpfile.read)
     end
     dimensions = Dimensions.dimensions("data/#{filename}")
+    filesize = (File.size("data/#{filename}").to_f / 2**20).round(2)
     imgur_url = upload_image filename
     unless imgur_url
       refresh_token
       imgur_url = upload_image filename
     end
-    { filename: filename, imgururl: imgur_url, width: dimensions[0], height: dimensions[1] }.to_json
+    { filename: filename, filesize: filesize, imgururl: imgur_url, width: dimensions[0], height: dimensions[1] }.to_json
   end
 
   get '/map' do

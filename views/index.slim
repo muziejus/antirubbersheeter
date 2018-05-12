@@ -12,8 +12,9 @@
             label for="file" Upload your map’s image 
             input type="file" class="form-control-file" id="file"
           button#uploadbtn.mb-3.btn.btn-block.btn-primary type="submit" Upload 
-        #result.invisible.alert
-          p.m-0 Result.<br>Result.
+        #result.invisible
+          .alert
+            p.m-0 Result.<br>Result.
       .col-8
         h2 Next:
         form#geocodeform action="/map" method="POST"
