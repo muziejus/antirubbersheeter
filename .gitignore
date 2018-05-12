@@ -1,5 +1,7 @@
 data/
 
+public/*.jpg
+
 *.yml
 *.pid
 *.log
