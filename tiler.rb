@@ -18,11 +18,11 @@ class App
     tile_dir = File.join dir, "tiles"
     Dir.mkdir dir
     Dir.mkdir tile_dir
-    i = ImageList.new(File.join("data", params[:filename]))
+    i = Image.read(File.join("data", params[:filename])).first
     zoom_levels.downto(1) do |zoomlevel|
       STDERR.puts "At zoomlevel #{zoomlevel} for #{params[:filename]}"
       make_tiles(i, tile_dir, zoomlevel )
-      i.resize!(0.5)
+      i.scale!(0.5)
     end
     STDERR.puts "Done tiling."
     ["map.html", "mapdata.js", "js", "css", "index.html", "README.txt"].each{ |src| FileUtils.cp_r "template/#{src}", dir }
