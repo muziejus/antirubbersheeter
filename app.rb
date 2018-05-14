@@ -4,6 +4,9 @@ require "sinatra/base"
 require "slim"
 require "./imgur"
 require "dimensions"
+require "dotenv"
+
+Dotenv.load
 
 class App < Sinatra::Base
 

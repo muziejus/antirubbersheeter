@@ -1,5 +1,7 @@
 require 'rmagick'
 require 'fileutils'
+require 'zip'
+require 'find'
 
 class App
   include Magick
@@ -12,17 +14,17 @@ class App
       zoom_levels = zoom_levels + 1
       minimum_dimension = minimum_dimension.to_f / 2
     end
-    dir = "data/map-#{file_object[:filename].split("-")[1]}"
-    tile_dir = "#{dir}/tiles"
+    dir = File.join "data", "map-#{file_object[:filename].split("-")[1]}"
+    tile_dir = File.join dir, "tiles"
     Dir.mkdir dir
     Dir.mkdir tile_dir
-    i = ImageList.new("data/#{file_object[:filename]}")
+    i = ImageList.new(File.join("data", file_object[:filename]))
     zoom_levels.downto(1) do |zoomlevel|
       make_tiles(i, tile_dir, zoomlevel )
       i.resize!(0.5)
     end
     ["map.html", "mapdata.js", "js", "css", "index.html", "README.txt"].each{ |src| FileUtils.cp_r "template/#{src}", dir }
-    File.open("#{dir}/js/data.js", "w") do |f|
+    File.open(File.join(dir, "js/data.js"), "w") do |f|
       f.puts "var data = {"
       f.puts "  height: #{file_object[:height]},"
       f.puts "  width: #{file_object[:width]},"
@@ -30,13 +32,32 @@ class App
       f.puts "  maxzoom: #{zoom_levels}"
       f.puts "};"
     end
+    destination_zip = File.join "data", "antirubbersheeter.zip"
+    File.delete(destination_zip) if File.exist?(destination_zip)
+    Zip::File.open(destination_zip, Zip::File::CREATE) do |zipfile|
+      zipdir = "antirubbersheeter"
+      zipfile.mkdir zipdir
+      Find.find(dir) do |path|
+        unless path == dir || path =~ /DS_Store/
+          short_path = path.sub("#{dir}/", "")
+          if path =~ /\.(js|html|css|txt|jpg|png)$/
+            zipfile.add(File.join(zipdir, short_path), path)
+          else
+            zipfile.mkdir(File.join(zipdir, short_path))
+          end
+        end
+      end
+    end
+    
+    # File.delete(path_to_file) if File.exist?(path_to_file)
+
     slim :tiler, layout: :layout
   end
 
   def make_tiles(i, tile_dir, zoomlevel) 
     # from https://github.com/rktjmp/tileup/blob/develop/lib/tileup/tiler.rb
-    dir = "#{tile_dir}/#{zoomlevel}"
-    Dir.mkdir dir
+    this_zoom = File.join tile_dir, zoomlevel.to_s
+    Dir.mkdir this_zoom
     num_cols = (i.columns / 256.0).ceil
     num_rows = (i.rows / 256.0).ceil
     x,y,col,row = 0,0,0,0
@@ -61,7 +82,7 @@ class App
     end
     crops.each do |c|
       ci = i.crop c[:x], c[:y], 256, 256, true
-      ci.write "#{dir}/#{c[:col]}_#{c[:row]}.jpg"
+      ci.write File.join(this_zoom, "#{c[:col]}_#{c[:row]}.jpg")
       ci = nil
     end
   end
