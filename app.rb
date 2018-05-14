@@ -7,6 +7,8 @@ require "dimensions"
 
 class App < Sinatra::Base
 
+  enable :sessions
+
   get '/' do
     slim :index, layout: :layout
   end
@@ -25,13 +27,16 @@ class App < Sinatra::Base
       f.write(tmpfile.read)
     end
     dimensions = Dimensions.dimensions("data/#{filename}")
-    filesize = (File.size("data/#{filename}").to_f / 2**20).round(2)
-    imgur_url = upload_image filename
-    unless imgur_url
-      refresh_token
+    if (File.size("data/#{filename}").to_f / 2**20).round(2) > 10
+      imgur_url = "not uploaded to imgur"
+    else
       imgur_url = upload_image filename
+      unless imgur_url
+        refresh_token
+        imgur_url = upload_image filename
+      end
     end
-    { filename: filename, filesize: filesize, imgururl: imgur_url, width: dimensions[0], height: dimensions[1] }.to_json
+    session[:file_object] = { filename: filename, imgururl: imgur_url, width: dimensions[0], height: dimensions[1] }.to_json
   end
 
   get '/map' do
@@ -48,15 +53,21 @@ class App < Sinatra::Base
   end
 
   post '/map' do
-    @imgururl = params[:imgururl]
-    @width = params[:width]
-    @height = params[:height]
-    @places = params[:places]
-    slim :map, layout: :layout
+    if params[:imgururl] == "not uploaded to imgur"
+      redirect "/tiler"
+    else
+      @imgururl = params[:imgururl]
+      @width = params[:width]
+      @height = params[:height]
+      @places = params[:places]
+      slim :map, layout: :layout
+    end
   end
 
   get '/demo-map' do
     slim :demo_map, layout: :layout
   end
+
+  require "./tiler"
 
 end

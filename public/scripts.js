@@ -18,10 +18,10 @@ $( document ).ready(() => {
           $("#result").addClass("alert").addClass("alert-danger").html(d.error + " Reload and try again.");
         } else {
           $("#result").addClass("alert").removeClass("alert-danger");
-          if(d.filesize < 10){
-            $("#result").addClass("alert-success").html("Upload succeeded. Now geocode →");
+          if(d.imgururl === "not uploaded to imgur"){
+            $("#result").addClass("alert-warning").html("Your file’s over 10Mb, so we will tile your image for use offline on your computer. Please continue →");
           } else {
-            $("#result").addClass("alert-warning").html("Your file’s over 10Mb, so this may not work. See the <a href='http://github.com/muziejus/antirubbersheeter'>README</a> for running a local instance. A more useful solution for large files is coming. But continue →");
+            $("#result").addClass("alert-success").html("Upload succeeded. Now geocode →");
           }
           $("#uploadbtn").attr("disabled", true);
           $("#geocodebtn").attr("disabled", false);
