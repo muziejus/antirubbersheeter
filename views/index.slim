@@ -85,3 +85,31 @@
           [^2]: Massey, _For Sapce_ (London: SAGE, 2005), 4.
 
           [^3]: Ibid., 9.
+
+#packagemodal.modal.fade tabindex="-1" role="dialog" aria-labelledby="packagemodaltitle" aria-hidden="true"
+  .modal-dialog.modal-lg role="document"
+    .modal-content
+      .modal-header
+        h5.modal-title#packagemodaltitle Package Mode Enabled
+        button.close type="button" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true" &times;
+      .modal-body
+        markdown:
+
+          Your file was above 10mb in size. This isn’t a problem—after all,
+          this tool is _best_ served on large, high-quality scans. But it does
+          mean things will work a bit differently.
+
+          Leaflet will have trouble with an image that large, so instead of
+          doing everything automatically for you right away, the
+          Antirubbersheeter will break up your image into tiles, package the
+          tiles up with some boilerplate code into a zipfile, and upload it all
+          to [WeTransfer](http://wetransfer), where you can download the zipfile.
+
+          Once you unpack the zipfile on your computer, there will be a file in
+          the `antirubbersheeter` folder called `index.html`. Double-click on
+          that, and your image should load as a tiled map in your browser.
+
+          We’ll repeat these instructions at the end of the process.
+      .modal-footer
+        button type="button" class="btn btn-primary" data-dismiss="modal" Got it. Let’s do this.

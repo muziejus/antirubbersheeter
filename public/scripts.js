@@ -19,7 +19,9 @@ $( document ).ready(() => {
         } else {
           $("#result").addClass("alert").removeClass("alert-danger");
           if(d.imgururl === "not uploaded to imgur"){
-            $("#result").addClass("alert-warning").html("Your file’s over 10Mb, so we will tile your image for use offline on your computer. Please continue →");
+            $("#result").addClass("alert-warning").html("Package Mode enabled. Continue →");
+            $("#geocodebtn").html("Start Bundling");
+            $("#packagemodal").modal("show");
           } else {
             $("#result").addClass("alert-success").html("Upload succeeded. Now geocode →");
           }
