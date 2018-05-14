@@ -20,9 +20,11 @@ class App
     Dir.mkdir tile_dir
     i = ImageList.new(File.join("data", params[:filename]))
     zoom_levels.downto(1) do |zoomlevel|
+      STDERR.puts "At zoomlevel #{zoomlevel} for #{params[:filename]}"
       make_tiles(i, tile_dir, zoomlevel )
       i.resize!(0.5)
     end
+    STDERR.puts "Done tiling."
     ["map.html", "mapdata.js", "js", "css", "index.html", "README.txt"].each{ |src| FileUtils.cp_r "template/#{src}", dir }
     File.open(File.join(dir, "js/data.js"), "w") do |f|
       f.puts "var data = {"
@@ -97,6 +99,7 @@ class App
     Dir.mkdir this_zoom
     num_cols = (i.columns / 256.0).ceil
     num_rows = (i.rows / 256.0).ceil
+    STDERR.puts "Making a tile map of #{num_cols} x #{num_rows}, or #{num_cols * num_rows} tiles total."
     x,y,col,row = 0,0,0,0
     crops = []
     while true
@@ -120,6 +123,7 @@ class App
     crops.each do |c|
       ci = i.crop c[:x], c[:y], 256, 256, true
       ci.write File.join(this_zoom, "#{c[:col]}_#{c[:row]}.jpg")
+      STDERR.puts "Generated #{this_zoom}/#{c[:col]}_#{c[:row]}.jpg"
       ci = nil
     end
   end
