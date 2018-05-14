@@ -2,6 +2,7 @@ require 'rmagick'
 require 'fileutils'
 require 'zip'
 require 'find'
+require 'we_transfer_client'
 
 class App
   include Magick
@@ -48,9 +49,14 @@ class App
         end
       end
     end
-    
-    # File.delete(path_to_file) if File.exist?(path_to_file)
-
+    wt_client = WeTransferClient.new api_key: ENV['WETRANSFER_API_KEY']
+    transfer = wt_client.create_transfer(
+      name: "Antirubbersheeter Map and Data",
+      description: "The tiles and place names registered with your recent visit to the Antirubbersheeter.") do |upload|
+      upload.add_file_at path: destination_zip
+    end
+    @wt_url = transfer.shortened_url
+    STDERR.puts @wt_url
     slim :tiler, layout: :layout
   end
 
