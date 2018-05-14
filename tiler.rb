@@ -21,7 +21,7 @@ class App
       make_tiles(i, tile_dir, zoomlevel )
       i.resize!(0.5)
     end
-    ["map.html", "mapdata.js", "js", "css", "index.html"].each{ |src| FileUtils.cp_r "template/#{src}", dir }
+    ["map.html", "mapdata.js", "js", "css", "index.html", "README.txt"].each{ |src| FileUtils.cp_r "template/#{src}", dir }
     File.open("#{dir}/js/data.js", "w") do |f|
       f.puts "var data = {"
       f.puts "  height: #{file_object[:height]},"
