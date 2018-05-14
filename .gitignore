@@ -6,6 +6,7 @@ template/js/bootstrap.bundle.min.js
 template/js/jquery-3.3.1.slim.min.js
 template/css
 
+puma.rb
 
 public/*.jpg
 
