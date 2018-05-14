@@ -57,7 +57,6 @@ class App
     # By default, there is no .env file. And even if there were, this
     # is set to "no." See .env.example
     unless ENV['UPLOAD_TO_WETRANSFER'] == "yes"
-      STDERR.puts "Not uploading to WeTransfer"
       session[:destination_zip] = destination_zip
       { target: "/local-package" }.to_json
     else
@@ -74,7 +73,6 @@ class App
       upload.add_file_at path: destination_zip
     end
     STDERR.puts transfer.inspect
-    # session[:wt_url] = "https://we.tl/s-Js71C3qtUX"
     session[:wt_url] = transfer.shortened_url
     session[:zipsize] = size_in_mb(destination_zip) 
   end
