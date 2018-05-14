@@ -1,5 +1,11 @@
 data/
 
+template/js/highlight.pack.js
+template/js/leaflet.js
+template/js/bootstrap.bundle.min.js
+template/css
+
+
 public/*.jpg
 
 *.yml
