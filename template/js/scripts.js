@@ -10,8 +10,8 @@ function geocoderInit(){
   $("#geocodingbtn").click(function(){
     marker.setOpacity(0);
     if(counter === data.places.length - 1){
-      data.places[counter].y = parseInt($("#y").text());
-      data.places[counter].x = parseInt($("#x").text());
+      data.places[counter].y = parseFloat($("#y").text());
+      data.places[counter].x = parseFloat($("#x").text());
       $("#carddiv").html("<p class='card-text'><strong>All done!</strong></p>");
       $("code.json").text(JSON.stringify(data, null, 2));
       $("pre code").each(function(i, block) {

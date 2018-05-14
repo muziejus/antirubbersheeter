@@ -1,9 +1,11 @@
 /* global hljs, L, demodata */
 $( document ).ready(() => {
 
+  addExternalLinks("body");
+
   $("#uploadform").submit((e) => {
     e.preventDefault();
-    $("#result").removeClass("invisible").addClass("visible").removeClass("alert-danger").html("<div class='py-3'><div class='progress my-3'><div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div><p>Uploading file…</p></div>");
+    $("#result").removeClass("invisible").addClass("visible").removeClass("alert-danger").html("<div><div class='progress' style='height: .25 rem;'><div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div><p class='m-0'>Uploading file…</p></div>");
     const data = new FormData();
     data.append("file", $("#file").get(0).files[0]);
     $.ajax({
@@ -18,21 +20,12 @@ $( document ).ready(() => {
           $("#result").addClass("alert").addClass("alert-danger").html(d.error + " Reload and try again.");
         } else {
           $("#result").addClass("alert").removeClass("alert-danger");
+          initStep2(d);
           if(d.imgururl === "not uploaded to imgur"){
-            $("#result").addClass("alert-warning").html("Package Mode enabled. Continue →");
-            $("#geocodebtn").html("Start Bundling");
-            $("#packagemodal").modal("show");
+            packageMode(d);
           } else {
             $("#result").addClass("alert-success").html("Upload succeeded. Now geocode →");
           }
-          $("#uploadbtn").attr("disabled", true);
-          $("#geocodebtn").attr("disabled", false);
-          // This is a goofy way to do this… but it works?
-          $("#filename").attr("value", d.filename);
-          $("#imgururl").attr("value", d.imgururl);
-          $("#width").attr("value", d.width);
-          $("#height").attr("value", d.height);
-          return d;
         }
       }
     });
@@ -50,8 +43,6 @@ $( document ).ready(() => {
       L.marker([p.y, p.x]).bindPopup(p.name).addTo(map);
     });
   }
-
-
 
   if($("#data").length > 0){
     let data = {};
@@ -74,8 +65,8 @@ $( document ).ready(() => {
     $("#geocodingbtn").click(function(){
       marker.setOpacity(0);
       if(counter === data.places.length - 1){
-        data.places[counter].y = parseInt($("#y").text());
-        data.places[counter].x = parseInt($("#x").text());
+        data.places[counter].y = parseFloat($("#y").text());
+        data.places[counter].x = parseFloat($("#x").text());
         $("#carddiv").html("<p class='card-text'><strong>All done!</strong></p>");
         $("code.json").text(JSON.stringify(data, null, 2));
         $("pre code").each(function(i, block) {
@@ -112,4 +103,66 @@ $( document ).ready(() => {
     });
   }
 });
+
+function initStep2(d){
+  // disable first button, enable second
+  $("#uploadbtn").attr("disabled", true);
+  $("#geocodebtn").attr("disabled", false);
+  // Prefill secret parameters.
+  // This is a goofy way to do this… but it works?
+  $("#filename").attr("value", d.filename);
+  $("#imgururl").attr("value", d.imgururl);
+  $("#width").attr("value", d.width);
+  $("#height").attr("value", d.height);
+}
+
+function packageMode(d){
+  // Change the status, show the modal, and the long progress bar.
+  $("#result").addClass("alert-warning").html("Continuing in Package Mode →");
+  $("#geocodebtn").html("Start Bundling");
+  $("#packagemodal").modal("show");
+  $("#packageprogress").removeClass("d-none").addClass("d-block");
+  // Rewire the second form and send the data along to the tiler.
+  $("#places").focus(() => {
+    updateBar(25, "Gathering places…");
+  });
+  $("#geocodeform").attr("action", "").submit((e) => {
+    $("#geocodebtn").html("Bundling").attr("disabled", true);
+    updateBar(50, "Making tiles…");
+    e.preventDefault();
+    d.placesstring = $("#places").val();
+    $.post("/tileup", d, (d) => {
+      zipPackage(d);
+    });
+  });
+}
+
+function zipPackage(d){
+  updateBar(75, "Zipping up package…");
+  $.post("/zipup", {data: d}, (d) => {
+    const newData = JSON.parse(d);
+    if(newData.target === "/local-package"){
+      window.location.replace("./local-package");
+    } else {
+      uploadToWeTransfer(d);
+    }
+  });
+}
+
+function uploadToWeTransfer(d){
+  updateBar(95, "Uploading package to WeTransfer…");
+  $.post("/uploadToWeTransfer", {data: d}, (d) => {
+    window.location.replace("./package")
+  });
+}
+
+function updateBar(width, status){
+  $("#packageprogressbar").css("width", width + "%").attr("aria-valuenow", width).html(status);
+}
+
+function addExternalLinks(selector){
+  const externalLink = $.parseHTML("<span>&nbsp;<i style='vertical-align: baseline; font-size: 60%;' class='fa fa-small fa-external-link-alt'></i></span>");
+  $(selector).find("a[href^='http']:not(a:has(img))").append(externalLink);
+  $(selector).find("a[href^='http']").attr("target", "_blank");
+}
 

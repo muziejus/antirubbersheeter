@@ -30,7 +30,7 @@ class App < Sinatra::Base
       f.write(tmpfile.read)
     end
     dimensions = Dimensions.dimensions("data/#{filename}")
-    if (File.size("data/#{filename}").to_f / 2**20).round(2) > 10
+    if size_in_mb(File.join("data", filename)) > 10
       imgur_url = "not uploaded to imgur"
     else
       imgur_url = upload_image filename

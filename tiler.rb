@@ -7,19 +7,18 @@ require 'we_transfer_client'
 class App
   include Magick
 
-  get "/tiler" do
-    file_object = JSON.parse session[:file_object], symbolize_names: true
-    minimum_dimension = [file_object[:height], file_object[:width]].sort.first
+  post "/tileup" do
+    minimum_dimension = [params[:height].to_i, params[:width].to_i].sort.first
     zoom_levels = 0
     until minimum_dimension < 500
       zoom_levels = zoom_levels + 1
       minimum_dimension = minimum_dimension.to_f / 2
     end
-    dir = File.join "data", "map-#{file_object[:filename].split("-")[1]}"
+    dir = File.join "data", "map-#{params[:filename].split("-")[1]}"
     tile_dir = File.join dir, "tiles"
     Dir.mkdir dir
     Dir.mkdir tile_dir
-    i = ImageList.new(File.join("data", file_object[:filename]))
+    i = ImageList.new(File.join("data", params[:filename]))
     zoom_levels.downto(1) do |zoomlevel|
       make_tiles(i, tile_dir, zoomlevel )
       i.resize!(0.5)
@@ -27,13 +26,19 @@ class App
     ["map.html", "mapdata.js", "js", "css", "index.html", "README.txt"].each{ |src| FileUtils.cp_r "template/#{src}", dir }
     File.open(File.join(dir, "js/data.js"), "w") do |f|
       f.puts "var data = {"
-      f.puts "  height: #{file_object[:height]},"
-      f.puts "  width: #{file_object[:width]},"
-      f.puts "  placesstring: \"#{session[:places]}\","
+      f.puts "  height: #{params[:height]},"
+      f.puts "  width: #{params[:width]},"
+      f.puts "  placesstring: \"#{params[:placesstring]}\","
       f.puts "  maxzoom: #{zoom_levels}"
       f.puts "};"
     end
-    destination_zip = File.join "data", "antirubbersheeter.zip"
+    params[:packagedir] = dir
+    params.to_json
+  end
+
+  post "/zipup" do
+    dir = JSON.parse(params[:data], symbolize_names: true)[:packagedir]
+    destination_zip = File.join "data", "antirubbersheeter-#{dir.split("-").last}.zip"
     File.delete(destination_zip) if File.exist?(destination_zip)
     Zip::File.open(destination_zip, Zip::File::CREATE) do |zipfile|
       zipdir = "antirubbersheeter"
@@ -49,15 +54,40 @@ class App
         end
       end
     end
+    # By default, there is no .env file. And even if there were, this
+    # is set to "no." See .env.example
+    unless ENV['UPLOAD_TO_WETRANSFER'] == "yes"
+      STDERR.puts "Not uploading to WeTransfer"
+      session[:destination_zip] = destination_zip
+      { target: "/local-package" }.to_json
+    else
+      { destination_zip: destination_zip }.to_json
+    end
+  end
+
+  post "/uploadToWeTransfer" do
+    destination_zip = JSON.parse(params[:data], symbolize_names: true)[:destination_zip]
     wt_client = WeTransferClient.new api_key: ENV['WETRANSFER_API_KEY']
     transfer = wt_client.create_transfer(
       name: "Antirubbersheeter Map and Data",
       description: "The tiles and place names registered with your recent visit to the Antirubbersheeter.") do |upload|
       upload.add_file_at path: destination_zip
     end
-    @wt_url = transfer.shortened_url
-    STDERR.puts @wt_url
-    slim :tiler, layout: :layout
+    STDERR.puts transfer.inspect
+    # session[:wt_url] = "https://we.tl/s-Js71C3qtUX"
+    session[:wt_url] = transfer.shortened_url
+    session[:zipsize] = size_in_mb(destination_zip) 
+  end
+
+  get "/package" do
+    @wt_url = session[:wt_url]
+    @zipsize = session[:zipsize]
+    slim :package, layout: :layout
+  end
+
+  get "/local-package" do
+    zip = session[:destination_zip] 
+    slim :local_package, layout: :layout, locals: { zipsize: size_in_mb(zip), zip: zip }
   end
 
   def make_tiles(i, tile_dir, zoomlevel) 
@@ -99,6 +129,10 @@ class App
 
   def two_five_six(num) 
     256 * (1 + ( num / 256 ))
+  end
+
+  def size_in_mb(file)
+    (File.size(file).to_f / 2**20).round(2)
   end
 
 end
