@@ -1,31 +1,34 @@
 require 'rmagick'
+require 'fileutils'
 
 class App
   include Magick
 
   get "/tiler" do
     file_object = JSON.parse session[:file_object], symbolize_names: true
-    STDERR.puts file_object
-    STDERR.puts file_object[:height]
-    STDERR.puts file_object[:width]
     minimum_dimension = [file_object[:height], file_object[:width]].sort.first
-    STDERR.puts minimum_dimension
     zoom_levels = 0
     until minimum_dimension < 500
       zoom_levels = zoom_levels + 1
       minimum_dimension = minimum_dimension.to_f / 2
     end
-    file = Image.read("data/#{file_object[:filename]}").first
     dir = "data/map-#{file_object[:filename].split("-")[1]}"
     tile_dir = "#{dir}/tiles"
     Dir.mkdir dir
     Dir.mkdir tile_dir
-    i = ImageList.new
-    i.new_image(two_five_six(file.columns), two_five_six(file.rows), HatchFill.new('white', 'gray90'))
-    i.composite!(file, margin(file.columns), margin(file.rows), Magick::OverCompositeOp)
-    zoom_levels.times do |zoomlevel|
-      make_tiles(i, tile_dir, 20 - zoomlevel )
-      i.resize! 0.5
+    i = ImageList.new("data/#{file_object[:filename]}")
+    zoom_levels.downto(1) do |zoomlevel|
+      make_tiles(i, tile_dir, zoomlevel )
+      i.resize!(0.5)
+    end
+    ["map.html", "mapdata.js", "js", "css", "index.html"].each{ |src| FileUtils.cp_r "template/#{src}", dir }
+    File.open("#{dir}/js/data.js", "w") do |f|
+      f.puts "var data = {"
+      f.puts "  height: #{file_object[:height]},"
+      f.puts "  width: #{file_object[:width]},"
+      f.puts "  placesstring: \"#{session[:places]}\","
+      f.puts "  maxzoom: #{zoom_levels}"
+      f.puts "};"
     end
     slim :tiler, layout: :layout
   end
@@ -34,8 +37,8 @@ class App
     # from https://github.com/rktjmp/tileup/blob/develop/lib/tileup/tiler.rb
     dir = "#{tile_dir}/#{zoomlevel}"
     Dir.mkdir dir
-    num_cols = i.columns / 256
-    num_rows = i.rows / 256
+    num_cols = (i.columns / 256.0).ceil
+    num_rows = (i.rows / 256.0).ceil
     x,y,col,row = 0,0,0,0
     crops = []
     while true

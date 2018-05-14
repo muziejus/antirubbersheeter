@@ -54,6 +54,7 @@ class App < Sinatra::Base
 
   post '/map' do
     if params[:imgururl] == "not uploaded to imgur"
+      session[:places] = params[:places]
       redirect "/tiler"
     else
       @imgururl = params[:imgururl]

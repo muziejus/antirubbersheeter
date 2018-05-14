@@ -1,0 +1,45 @@
+<html lang="en-US">
+  <head>
+    <title>Antirubbersheeter Geocoder</title>
+  <meta charset="utf-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" >
+  <meta content="width=device-width, initial-scale=1" name="viewport" >
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/leaflet.css">
+  </head>
+  <body style="height: 100%; margin: 0;">
+    <div id="map" style="height: 100%"></div>
+    <script src="js/leaflet.js"></script>
+    <script src="js/data.js"></script>
+    <script src="mapdata.js"></script>
+    <script>
+      // This relies on the variable data, which is defined in data.js
+      // and holds the data from Antirubbersheeter.
+      const map = L.map("map", {
+        crs: L.CRS.Simple,
+        maxZoom: data.maxzoom,
+        minZoom: 1
+      });
+      L.tileLayer("./tiles/{z}/{x}_{y}.jpg", {
+        attribution: "Antirubbersheeter, by <a href='http://moacir.com' target='_blank'>Moacir P. de Sá Pereira</a>",
+        maxZoom: data.maxzoom,
+        minZoom: 1
+      }).addTo(map);
+      const southwestCorner = map.unproject([0, data.height], map.getMaxZoom());
+      const northeastCorner = map.unproject([data.width, 0], map.getMaxZoom());
+      map.setView([southwestCorner.lat / 2, northeastCorner.lng / 2], 1);
+      map.setMaxBounds(new L.LatLngBounds(southwestCorner, northeastCorner));
+      // mapData is defined in the file mapdata.js. If you want map.html
+      // to display your data, you must paste in the json from your
+      // geocoding into that file.
+      if(typeof mapData !== "undefined"){
+        mapData.places.forEach((p) => {
+          L.marker([p.y, p.x]).bindPopup(p.name).addTo(map);
+        });
+      } else {
+        alert("The variable 'mapData' is not defined. Did you paste the JSON data from the geocoder into the mapdata.js file?");
+      }
+    </script>
+  </body>
+</html>
+
