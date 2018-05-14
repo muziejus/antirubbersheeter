@@ -3,6 +3,7 @@ data/
 template/js/highlight.pack.js
 template/js/leaflet.js
 template/js/bootstrap.bundle.min.js
+template/js/jquery-3.3.1.slim.min.js
 template/css
 
 
