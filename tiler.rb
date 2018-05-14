@@ -54,6 +54,7 @@ class App
         end
       end
     end
+    FileUtils.remove_entry_secure(dir) # don't need the directory anymore.
     # By default, there is no .env file. And even if there were, this
     # is set to "no." See .env.example
     unless ENV['UPLOAD_TO_WETRANSFER'] == "yes"
@@ -73,11 +74,13 @@ class App
       upload.add_file_at path: destination_zip
     end
     STDERR.puts transfer.inspect
+    session[:destination_zip] = destination_zip
     session[:wt_url] = transfer.shortened_url
     session[:zipsize] = size_in_mb(destination_zip) 
   end
 
   get "/package" do
+    File.delete(session[:destination_zip]) # don't need the zip anymore.
     @wt_url = session[:wt_url]
     @zipsize = session[:zipsize]
     slim :package, layout: :layout
