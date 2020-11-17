@@ -7,8 +7,8 @@ end
 
 def upload_image(filename)
   get_configs
-  response = HTTParty.post 'https://api.imgur.com/3/upload',
-    :headers => { 'Authorization' => "Bearer #{@configs[:imgur_access_token]}" },
+  response = HTTParty.post 'https://api.imgur.com/3/image',
+    :headers => { 'Authorization' => "Client-ID #{@configs[:imgur_client_id]}" },
     :body => { 'image' => Base64.encode64(File.read("data/#{filename}")) }
   puts response
   response['data']['link']
