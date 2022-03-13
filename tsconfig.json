@@ -20,21 +20,12 @@
     "baseUrl": ".",
     "module": "es6",
     "experimentalDecorators": true,
+    "typeRoots": ["types/*"],
     "paths": {
-      "antirubbersheeter/tests/*": [
-        "tests/*"
-      ],
-      "antirubbersheeter/*": [
-        "app/*"
-      ],
-      "*": [
-        "types/*"
-      ]
+      "antirubbersheeter/tests/*": ["tests/*"],
+      "antirubbersheeter/*": ["app/*"],
+      "*": ["types/*"]
     }
   },
-  "include": [
-    "app/**/*",
-    "tests/**/*",
-    "types/**/*"
-  ]
+  "include": ["app/**/*", "tests/**/*", "types/**/*"]
 }

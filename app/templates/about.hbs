@@ -1,1 +1,54 @@
-{{outlet}}
+<div aria-hidden="true" aria-labelledby="aboutmodaltitle" class="modal fade" id="aboutmodal" role="dialog" tabindex="-1"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="aboutmodaltitle">About the Antirubbersheeter</h5><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><p>The Antirubbersheeter exists in implicit critique of the tendency to
+“<a href="https://support.esri.com/en/other-resources/gis-dictionary/term/georectification">georectify</a>”
+maps to fit into the <a href="https://en.wikipedia.org/wiki/Web_Mercator">Web
+Mercator</a> projection, as
+though that’s the “cor<em>rect</em>,” in some way, a “faulty” map. As
+Johanna Drucker reminds us, “the greater intellectual challenge is to
+create spatial representations without referencing a pre-existing
+ground.”<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> Doing so turns space into a surface, “continuous and given,”
+as Doreen Massey notes.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup></p>
+
+<p>Instead, we should follow Massey’s lead and remember that space is as
+a place always “under construction,” and, as such, as one where
+taking a representaion of space and “rectifying” it does violence to
+the way the creators of the representation chose to distribute items
+in space.<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup></p>
+
+<p>Hence the Antirubbersheeter (<a href="https://github.com/muziejus/antirubbersheeter"><i class="fab fa-github"></i>
+@muziejus/antirubbersheeter</a>),
+which aims to provide the usability of a web framework like
+<a href="http://leafletjs.com">Leaflet</a> but letting the representation itself
+determine its coordinate scheme. Of course, that scheme remains
+Cartesian, but computers have limitations.</p>
+
+<p>The Antirubbersheeter lets you upload an image, which is subsequently
+copied over to <a href="http://imgur.com">Imgur</a>, which subsequently hosts
+the image. Additionally, you add a comma-separated list of places you
+would like to locate on the map and start the geocoder.</p>
+
+<p>The page now becomes a familiar Leaflet map, but with your image in
+the center. Here, you are prompted to place markers for each place
+you included in your earlier list. Once all the places have been
+recorded (click to place a marker, click the button to advance), a
+modal will open with your dataset presented in JSON. You should copy
+and save that object for later use in your own Leaflet projects, or
+whatever.</p>
+
+<p>See the <a href="https://github.com/muziejus/antirubbersheeter">GitHub
+README</a> if you want to
+build your dataset locally on your computer and not use Imgur.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Drucker, <em>Graphesis</em> (Cambridge, MA: Harvard UP, 2014), 77. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Massey, <em>For Sapce</em> (London: SAGE, 2005), 4. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>Ibid., 9. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div></div></div></div>
