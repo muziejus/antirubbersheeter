@@ -1,0 +1,9 @@
+@import "./fonts";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: red;
+}
