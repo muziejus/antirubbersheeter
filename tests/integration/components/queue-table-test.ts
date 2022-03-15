@@ -3,15 +3,15 @@ import { setupRenderingTest } from "ember-qunit";
 import { render } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 
-module("Integration | Component | uploader", function (hooks) {
+module("Integration | Component | queue-table", function (hooks) {
   setupRenderingTest(hooks);
 
   test("it renders", async function (assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<Uploader />`);
+    await render(hbs`<QueueTable />`);
 
-    assert.dom().includesText("queue");
+    assert.dom().containsText("");
   });
 });

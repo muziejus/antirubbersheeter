@@ -1,18 +1,27 @@
-{{#let (file-queue name="photos") as |queue|}}
+{{#let (file-queue name="files" onFileAdded=this.uploadFile) as |queue|}}
   
   <h2>Files in queue: {{queue.files.length}}</h2>
 
-<FileDropzone @queue={{queue}} as |dropzone|>
+<FileDropzone
+  @queue={{queue}} 
+  @filter={{this.validateFile}}
+  as |dropzone|>
     {{#if dropzone.active}}
       Drop to upload
     {{else if queue.files.length}}
       Uploading {{queue.files.length}} files. ({{queue.progress}}%)
+
+
     {{else if dropzone.supported}}
       Drag and drop photos here to upload them
+    {{else}}
+      <input type="file" {{queue.selectFile filter=this.validateFile}}>
     {{/if}}
   </FileDropzone>
+  <QueueTable @queue={{queue}}/>
 {{/let}}
 
+<!--
 <div class="row">
   <div class="col-4">
     <h2>First:</h2>
@@ -51,3 +60,4 @@
       </div>
   </div>
 </div>
+-->

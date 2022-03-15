@@ -1,0 +1,10 @@
+{{#if @queue.files.length}}
+  Queue tables:
+  <ul>
+  {{#each this.fileNames as |fileName|}}
+    <li>{{fileName}}</li>
+  {{/each}}
+  </ul>
+{{else}}
+  No Files Uploaded
+{{/if}}
