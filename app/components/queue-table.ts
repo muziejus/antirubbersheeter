@@ -6,7 +6,6 @@ interface QueueTableComponentArgs {
 }
 
 export default class QueueTableComponent extends Component<QueueTableComponentArgs> {
-
   get fileNames() {
     return this.args.queue.files.map(f => f.name);
   }

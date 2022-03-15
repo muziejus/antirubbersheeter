@@ -2,7 +2,9 @@ import Component from "@glimmer/component";
 import { action } from "@ember/object";
 import UploadFile from "ember-file-upload/upload-file";
 
-interface UploaderComponentArgs {}
+interface UploaderComponentArgs {
+  bingo: undefined;
+}
 
 export default class UploaderComponent extends Component<UploaderComponentArgs> {
   allowedTypes = ["text/csv", "image/gif", "image/jpeg", "image/png"];
