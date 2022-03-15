@@ -12,19 +12,6 @@ module("Integration | Component | header", function(hooks) {
 
     await render(hbs`<Header />`);
 
-    this.element instanceof Element
-      ? assert.dom(this.element).hasText("")
-      : assert.ok(false, "`this.element` is not an instance of `Element`");
-
-    // Template block usage:
-    await render(hbs`
-        <Header>
-          template block text
-        </Header>
-      `);
-
-    this.element instanceof Element
-      ? assert.dom(this.element).hasText("template block text")
-      : assert.ok(false, "`this.element` is not an instance of `Element`");
+    assert.dom().includesText("Antirubbersheeter")
   });
 });
