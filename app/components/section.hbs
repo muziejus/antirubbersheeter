@@ -1,0 +1,8 @@
+<section class="flex flex-col space-y-3 w-full px-8 {{if @open "bg-white py-8" "py-2 bg-light-gray"}}">
+  {{#if @open}}
+    <h2 class="text-4xl text-gray">{{@title}}</h2>
+    {{yield}}
+  {{else}}
+    <h2 class="text-2xl">{{@title}}</h2>
+  {{/if}}
+</section>

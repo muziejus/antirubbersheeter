@@ -1,0 +1,11 @@
+<article class="border-light-gray border-4 divide-gray divide-y">
+  <Section @open={{this.openUploader}} @toggle={{this.toggle}} @title="Upload">
+    <Uploader />
+  </Section>
+  <Section @open={{this.openMap}} @toggle={{this.toggle}} @title="Place">
+    <Map />
+  </Section>
+  <Section @open={{this.openDownloader}} @toggle={{this.toggle}} @title="Download">
+    <Downloader />
+  </Section>
+</article>

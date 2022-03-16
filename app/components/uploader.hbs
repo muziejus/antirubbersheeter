@@ -1,7 +1,4 @@
 {{#let (file-queue name="files" onFileAdded=this.uploadFile) as |queue|}}
-  
-  <h2>Files in queue: {{queue.files.length}}</h2>
-
 <FileDropzone
   @queue={{queue}} 
   @filter={{this.validateFile}}
@@ -13,51 +10,14 @@
 
 
     {{else if dropzone.supported}}
-      Drag and drop photos here to upload them
+      <div class="flex flex-col justify-center items-center
+      w-full py-20 border-blue space-y-4 border-dotted border-4 bg-blue">
+        <h2 class="text-9xl">🗺📊</h2>
+        <p class="text-2xl text-white">Drag and drop your map file and places .csv here.</p>
+      </div>
     {{else}}
       <input type="file" {{queue.selectFile filter=this.validateFile}}>
     {{/if}}
   </FileDropzone>
   <QueueTable @queue={{queue}}/>
 {{/let}}
-
-<!--
-<div class="row">
-  <div class="col-4">
-    <h2>First:</h2>
-      <div class="form-group">
-        <label for="file">Upload your map’s image </label>
-        <input class="form-control-file" id="file" type="file" />
-      </div>
-      <button class="mb-3 btn btn-block btn-primary" id="uploadbtn" type="submit">Upload </button>
-    <div class="invisible alert" id="result">
-      <result>Result.</result>
-    </div>
-  </div>
-  <div class="col-8">
-    <h2>Next:</h2>
-      <div class="form-group">
-          <label for="places">Paste in places you want to geocode, separated by commas</label>
-          <textarea class="form-control" id="places" name="places" placeholder="Sutpen&#39;s Hundred, Belle Mitchell&#39;s, Varner&#39;s Store, Sartoris Plantation…" rows="3"></textarea>
-      </div>
-      <div class="form-group">
-        <input id="filename" name="filename" type="hidden" value="" />
-        <input id="imgururl" name="imgururl" type="hidden" value="" />
-        <input id="width" name="width" type="hidden" value="" />
-        <input id="height" name="height" type="hidden" value="" />
-      </div>
-      <div class="row mr-0">
-        <div class="col">
-          <div class="progress d-none">
-            <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="12" class="h-100 progress-bar progress-bar-striped progress-bar-animated" role="progressbar" >
-              Waiting for Places…
-            </div>
-          </div>
-        </div>
-        <button disabled aria-disabled="true" id="geocodebtn" class="col-auto btn btn-primary" type="submit">
-          Geocode
-        </button>
-      </div>
-  </div>
-</div>
--->
