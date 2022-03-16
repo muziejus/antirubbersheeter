@@ -1,9 +1,9 @@
-@import "./fonts";
+@import url("https://fonts.googleapis.com/css2?family=Herr+Von+Muellerhoff&family=Hina+Mincho&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  background: red;
+  @apply bg-dark-blue w-screen h-screen flex flex-col text-dark-blue font-serif;
 }
