@@ -4,20 +4,37 @@
   @filter={{this.validateFile}}
   as |dropzone|>
     {{#if dropzone.active}}
-      Drop to upload
+        <Uploader::Dropbox @bgBorder="bg-light-gray">
+          <p class="text-2xl text-dark-blue">Drop to Upload</p>
+        </Uploader::Dropbox>
     {{else if queue.files.length}}
-      Uploading {{queue.files.length}} files. ({{queue.progress}}%)
+        <Uploader::Dropbox @bgBorder="bg-tan">
+          <p class="text-2xl text-dark-blue">
+            {{#if (eq queue.files.length 2)}}
+              Map and place data ready to go. Press “Upload” below. ({{queue.progress}}% uploaded)
+            {{else}}
+              {{#if this.mapUploaded}}
+                Map image added to queue. Please add your place data.
+              {{ else }}
+                Place data added to queue. Please add your map image.
+              {{/if}}
+            {{/if}}
+          </p>
+        </Uploader::Dropbox>
 
 
     {{else if dropzone.supported}}
-      <div class="flex flex-col justify-center items-center
-      w-full py-20 border-blue space-y-4 border-dotted border-4 bg-blue">
-        <h2 class="text-9xl">🗺📊</h2>
-        <p class="text-2xl text-white">Drag and drop your map file and places .csv here.</p>
-      </div>
+        <Uploader::Dropbox @bgBorder="bg-blue">
+          <p class="text-2xl text-white">Drag and drop your map file and places .csv here.</p>
+        </Uploader::Dropbox>
     {{else}}
-      <input type="file" {{queue.selectFile filter=this.validateFile}}>
+      <label> Upload Files
+        <input type="file" {{queue.selectFile filter=this.validateFile}}>
+      </label>
     {{/if}}
   </FileDropzone>
+  {{#if this.showError}}
+    <p>{{this.errorMessage}}</p>
+  {{/if}}
   <QueueTable @queue={{queue}}/>
 {{/let}}

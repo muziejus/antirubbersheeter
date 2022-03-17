@@ -10,17 +10,20 @@ module("Integration | Component | section", function (hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<Section />`);
+    this.set("open", true);
+    this.set("title", "title");
 
-    assert.dom(this.element).hasText("");
+    await render(hbs`<Section @title={{this.title}}/>`);
+
+    assert.dom().containsText("title");
 
     // Template block usage:
     await render(hbs`
-      <Section>
+      <Section @open={{this.open}}>
         template block text
       </Section>
     `);
 
-    assert.dom(this.element).hasText("template block text");
+    assert.dom().containsText("template block text");
   });
 });

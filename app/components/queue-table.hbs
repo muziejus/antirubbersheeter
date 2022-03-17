@@ -1,10 +1,9 @@
-{{#if @queue.files.length}}
-  Queue tables:
-  <ul>
-  {{#each this.fileNames as |fileName|}}
-    <li>{{fileName}}</li>
-  {{/each}}
-  </ul>
-{{else}}
-  No Files Uploaded
-{{/if}}
+{{!#if @queue.files.length}}
+  <div class="flex flex-row w-full divide-gray divide-x space-x-3">
+    <QueueTable::FileCard @file={{this.image}} @type="image" />
+    <QueueTable::FileCard @file={{this.csv}} @type="csv" />
+  </div>
+  <Button>
+    Upload
+  </Button>
+{{!/if}}

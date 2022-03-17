@@ -3,24 +3,15 @@ import { setupRenderingTest } from "ember-qunit";
 import { render } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 
-module("Integration | Component | action-box", function (hooks) {
+module("Integration | Component | action-box", function(hooks) {
   setupRenderingTest(hooks);
 
-  test("it renders", async function (assert) {
+  test("it renders", async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
     await render(hbs`<ActionBox />`);
 
-    assert.dom(this.element).hasText("");
-
-    // Template block usage:
-    await render(hbs`
-      <ActionBox>
-        template block text
-      </ActionBox>
-    `);
-
-    assert.dom(this.element).hasText("template block text");
+    assert.dom().containsText("");
   });
 });

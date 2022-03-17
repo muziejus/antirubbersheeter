@@ -12,6 +12,6 @@ module("Integration | Component | uploader", function (hooks) {
 
     await render(hbs`<Uploader />`);
 
-    assert.dom().includesText("queue");
+    assert.dom().includesText("Drag and drop");
   });
 });

@@ -12,15 +12,6 @@ module("Integration | Component | downloader", function (hooks) {
 
     await render(hbs`<Downloader />`);
 
-    assert.dom().hasText("");
-
-    // Template block usage:
-    await render(hbs`
-      <Downloader>
-        template block text
-      </Downloader>
-    `);
-
-    assert.dom().hasText("template block text");
+    assert.dom().containsText("downloader");
   });
 });

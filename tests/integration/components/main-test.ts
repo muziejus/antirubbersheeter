@@ -12,7 +12,7 @@ module("Integration | Component | main", function (hooks) {
 
     await render(hbs`<Main />`);
 
-    assert.dom().hasText("");
+    assert.dom().containsText("");
 
     // Template block usage:
     await render(hbs`
@@ -21,6 +21,6 @@ module("Integration | Component | main", function (hooks) {
       </Main>
     `);
 
-    assert.dom().hasText("template block text");
+    assert.dom().containsText("template block text");
   });
 });
