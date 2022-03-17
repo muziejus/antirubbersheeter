@@ -1,0 +1,58 @@
+{
+  "tests/acceptance/*-test.ts": {
+    "type": "acceptanceTest"
+  },
+  "app/models/*.ts": {
+    "type": "model",
+    "alternate": "tests/unit/models/{}-test.ts"
+  },
+  "app/services/*.ts": {
+    "type": "service",
+    "alternate": "tests/unit/services/{}-test.ts"
+  },
+  "app/helpers/*.ts": {
+    "type": "helper",
+    "alternate": "tests/integration/helpers/{}-test.ts"
+  },
+  "app/templates/*.hbs": {
+    "type": "rtemplate",
+    "alternate": "tests/unit/routes/{}-test.ts"
+  },
+  "tests/unit/routes/*-test.ts": {
+    "type": "rtest",
+    "alternate": "app/routes/{}.ts"
+  },
+  "app/routes/*.ts": {
+    "type": "route",
+    "alternate": "app/templates/{}.hbs"
+  },
+  "app/components/*.hbs": {
+    "type": "component",
+    "alternate": "app/components/{}.ts"
+  },
+  "tests/integration/components/*-test.ts": {
+    "type": "ctest",
+    "alternate": "app/components/{}.hbs"
+  },
+  "app/components/*.ts": {
+    "type": "cclass",
+    "alternate": "app/components/{}.hbs"
+  },
+  "app/router.js": {
+    "type": "router"
+  },
+  "mirage/config.js": {
+    "type": "mconfig"
+  },
+  "mirage/models/*.js": {
+    "type": "mmodel",
+    "alternate": "mirage/factories/{}.js"
+  },
+  "mirage/factories/*.js": {
+    "type": "mfactory",
+    "alternate": "mirage/models/{}.js"
+  },
+  "mirage/scenarios/*.js": {
+    "type": "mscenario"
+  }
+}
