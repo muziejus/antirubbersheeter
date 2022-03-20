@@ -1,15 +1,15 @@
-{{#let (file-queue name="files" onFileAdded=this.uploadFile) as |queue|}}
+{{#let (file-queue name="files" onFileAdded=this.addFile) as |queue|}}
 <FileDropzone
   @queue={{queue}} 
   @filter={{this.validateFile}}
   as |dropzone|>
     {{#if dropzone.active}}
-        <Uploader::Dropbox @bgBorder="bg-light-gray">
-          <p class="text-2xl text-dark-blue">Drop to Upload</p>
+        <Uploader::Dropbox class="text-dark-blue bg-light-gray">
+          <p class="text-2xl">Drop to Upload</p>
         </Uploader::Dropbox>
     {{else if queue.files.length}}
-        <Uploader::Dropbox @bgBorder="bg-tan">
-          <p class="text-2xl text-dark-blue">
+        <Uploader::Dropbox class="text-dark-blue bg-tan">
+          <p class="text-2xl">
             {{#if (eq queue.files.length 2)}}
               Map and place data ready to go. Press “Upload” below. ({{queue.progress}}% uploaded)
             {{else}}
@@ -24,8 +24,8 @@
 
 
     {{else if dropzone.supported}}
-        <Uploader::Dropbox @bgBorder="bg-blue">
-          <p class="text-2xl text-white">Drag and drop your map file and places .csv here.</p>
+        <Uploader::Dropbox class="bg-blue text-white">
+          <p class="text-2xl">Drag and drop your map file and places .csv here.</p>
         </Uploader::Dropbox>
     {{else}}
       <label> Upload Files
@@ -36,5 +36,15 @@
   {{#if this.showError}}
     <p>{{this.errorMessage}}</p>
   {{/if}}
-  <QueueTable @queue={{queue}}/>
+  {{#if queue.files.length}}
+    <QueueTable @queue={{queue}} @typedPlaces={{this.typedPlaces}}/>
+    <div class="space-x-3 flex flex-row w-full justify-end">
+    <Button class="bg-gray text-xl w-1/4" {{on "click" (fn this.flushQueue queue) }}>
+      Reset
+    </Button>
+    <Button class="text-xl w-1/4" @disabled={{this.uploadButtonDisabled}}>
+      Upload
+    </Button>
+    </div>
+  {{/if}}
 {{/let}}

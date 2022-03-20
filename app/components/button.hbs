@@ -1,7 +1,8 @@
 <button class="block 
-  p-3 shadow-md
+  p-3 shadow-md disabled:shadow-none disabled:cursor-not-allowed
   disabled:text-gray disabled:bg-light-gray disabled:border-gray
-  text-gray bg-light-gray border border-gray
-  " type="button">
+  text-light-gray bg-blue border-gray
+  
+  " type="button" ...attributes disabled={{@disabled}}>
   {{yield}}
 </button>

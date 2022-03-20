@@ -1,14 +1,52 @@
 <div class="p-3 w-1/2">
-  <h3 class="text-3xl">
   {{#if @file}}
-    {{@file.name}}
+    <h3 class="text-3xl text-gray">
+      {{#if (eq @type "image")}}
+        Map Image
+      {{else}}
+        Spatial Data
+      {{/if}}
+    </h3>
+    <div class="flex flex-row w-100 text-3xl p-3">
+      <div class="flex flex-col w-1/4 text-right divide-gray divide-y bg-light-gray p-3 space-y-3">
+        <p>Name:</p>
+        <p>Size:</p>
+        <p>Type:</p>
+      </div>
+      <div class="flex flex-col w-3/4 divide-gray divide-y p-3 space-y-3">
+        <p>
+          {{@file.name}}
+        </p>
+        <p>
+          {{format-size @file.size}}
+        </p>
+        <p>
+          {{@file.type}}
+        </p>
+      </div>
+    </div>
   {{else}}
     {{#if (eq @type "image")}}
+      <h3 class="text-3xl text-gray italic">
       No map uploaded.
+      </h3>
     {{else}}
+      <h3 class="text-3xl text-gray italic">
       No spatial data uploaded.
+      </h3>
+
+      <p class="text-2xl py-3">In lieu of uploading a .csv file, you can paste in a comma-separated list of places below:</p>
+      <label for="comma-places" class="block sr-only">
+        Places
+      </label>
+      <Textarea
+        class="placeholder:text-gray placeholder:italic bg-light-gray text-dark-blue w-full p-3 text-xl"
+        id="comma-places"
+        @value={{@typedPlaces}}
+        placeholder="Sutpen’s Hundred, Belle Mitchell’s, Varner’s Store, Sartoris Plantation…"
+        rows="3"
+        />
     {{/if}}
   {{/if}}
-  </h3>
 </div>
 

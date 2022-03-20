@@ -2,12 +2,18 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
 import UploadFile from "ember-file-upload/upload-file";
+import Queue from "ember-file-upload/queue";
 
 interface UploaderComponentArgs {
   bingo: undefined;
 }
 
 export default class UploaderComponent extends Component<UploaderComponentArgs> {
+  get uploadButtonDisabled() {
+    return !(this.mapUploaded && (this.csvUploaded || this.typedPlaces));
+  }
+  @tracked typedPlaces = "";
+
   @tracked errorMessage = "";
 
   @tracked showError = false;
@@ -39,7 +45,7 @@ export default class UploaderComponent extends Component<UploaderComponentArgs> 
   }
 
   @action
-  async uploadFile(file: UploadFile) {
+  async addFile(file: UploadFile) {
     try {
       const { type } = file;
       type === "text/csv"
@@ -49,7 +55,6 @@ export default class UploaderComponent extends Component<UploaderComponentArgs> 
       // if (file.type === "text/csv") {
       //   fileKey = "csv";
       // }
-      console.log(file.queue?.files.map(f => f.name));
       // const response = await file.upload(this.uploadUrl, { fileKey });
       // console.log("got response", response);
       // return response;
@@ -57,5 +62,17 @@ export default class UploaderComponent extends Component<UploaderComponentArgs> 
       console.log(error);
       // file.state = "aborted";
     }
+  }
+
+  @action
+  async uploadFiles(queue: Queue) {
+    return queue;
+  }
+
+  @action
+  flushQueue(queue: Queue): void {
+    console.log("fixina flush the q");
+    queue.files.forEach(file => queue.remove(file));
+    console.log(queue);
   }
 }

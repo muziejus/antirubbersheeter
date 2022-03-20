@@ -1,9 +1,4 @@
-{{!#if @queue.files.length}}
-  <div class="flex flex-row w-full divide-gray divide-x space-x-3">
-    <QueueTable::FileCard @file={{this.image}} @type="image" />
-    <QueueTable::FileCard @file={{this.csv}} @type="csv" />
-  </div>
-  <Button>
-    Upload
-  </Button>
-{{!/if}}
+<div class="flex flex-row w-full divide-gray divide-x space-x-3">
+  <QueueTable::FileCard @file={{this.image}} @type="image" />
+  <QueueTable::FileCard @file={{this.csv}} @type="csv" @typedPlaces={{@typedPlaces}}/>
+</div>
