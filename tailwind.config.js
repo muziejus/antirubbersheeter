@@ -8,6 +8,8 @@ module.exports = {
   content: [path.join(appEntry, relevantFilesGlob)],
   theme: {
     colors: {
+      transparent: "transparent",
+      current: "currentColor",
       white: "#f9f9f9",
       "light-gray": "#efefef",
       tan: "#d2d2c0",
