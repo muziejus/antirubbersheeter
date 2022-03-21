@@ -1,7 +1,5 @@
-<p>map</p>
+<LeafletMap @lat={{this.lat}} @lng={{this.lng}} @zoom={{this.zoom}} as |layers| >
+  <layers.tile @url={{this.tileUrl}}/>
 
-<p>csv uuid: {{this.state.placeUuid}}</p>
-
-<p>map uuid: {{this.state.mapUuid}}</p>
-
-<p>typedPlaces: {{this.state.typedPlaces}}</p>
+  {{!-- Specify child layer components here --}}
+</LeafletMap>

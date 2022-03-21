@@ -1,22 +1,14 @@
 import Service from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 
-interface Data {
-  placeData: {
-    uuid: string;
-    data: {}[];
-  };
-  mapData: {
-    uuid: string;
-  };
-  typedPlaces: string;
-}
-
 export default class StateService extends Service {
   @tracked
   step: "upload" | "place" | "download" = "upload";
 
+  uploadUrl = "http://localhost:8080/upload";
+
   @tracked placeUuid = "";
+
   @tracked mapUuid = "";
 
   @tracked typedPlaces = "";

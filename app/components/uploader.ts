@@ -44,8 +44,6 @@ export default class UploaderComponent extends Component {
 
   allowedTypes = ["text/csv", "image/tiff", "image/jpeg", "image/png"];
 
-  uploadUrl = "http://localhost:8080/upload";
-
   @action
   validateFile({ type }: UploadFile) {
     let allowed = this.allowedTypes.includes(type);
@@ -85,7 +83,7 @@ export default class UploaderComponent extends Component {
         if (file.type === "text/csv") {
           fileKey = "csv";
         }
-        const response = (await file.upload(this.uploadUrl, {
+        const response = (await file.upload(this.state.uploadUrl, {
           fileKey,
         })) as UploadResponse;
         const { data } = response.body;

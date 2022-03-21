@@ -7,3 +7,7 @@
 body {
   @apply bg-dark-blue w-screen h-screen flex flex-col text-dark-blue font-serif;
 }
+
+.leaflet-container {
+  height: 60vh;
+}
