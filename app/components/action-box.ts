@@ -1,13 +1,7 @@
 import Component from "@glimmer/component";
-import { tracked } from "@glimmer/tracking";
-import { action } from "@ember/object";
+import { inject as service } from "@ember/service";
+import State from "antirubbersheeter/services/state";
 
 export default class ActionBoxComponent extends Component {
-  @tracked openUploader = true;
-  @tracked openMap = false;
-  @tracked openDownloader = false;
-
-  @action toggle(value: boolean) {
-    return !value;
-  }
+  @service declare state: State;
 }

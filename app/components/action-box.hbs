@@ -1,11 +1,15 @@
 <article class="border-light-gray border-4 divide-gray divide-y">
-  <Section @open={{this.openUploader}} @toggle={{this.toggle}} @title="Upload">
+  <Section @open={{eq this.state.step "upload"}} @title="Upload">
     <Uploader />
   </Section>
-  <Section @open={{this.openMap}} @toggle={{this.toggle}} @title="Place">
+  <Section @open={{eq this.state.step "place"}} @title="Place">
     <Map />
   </Section>
-  <Section @open={{this.openDownloader}} @toggle={{this.toggle}} @title="Download">
+  <Section @open={{eq this.state.step "download"}} @title="Download">
     <Downloader />
   </Section>
+  <p>csv uuid: {{this.state.placeUuid}}</p>
+  <p>map uuid: {{this.state.mapUuid}}</p>
+  <p>typedPlaces: {{this.state.typedPlaces}}</p>
 </article>
+

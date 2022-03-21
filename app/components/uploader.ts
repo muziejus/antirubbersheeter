@@ -3,15 +3,35 @@ import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
 import UploadFile from "ember-file-upload/upload-file";
 import Queue from "ember-file-upload/queue";
+import { inject as service } from "@ember/service";
+import State from "antirubbersheeter/services/state";
 
-interface UploaderComponentArgs {
-  bingo: undefined;
+interface UploadResponse {
+  status: number;
+  headers: {};
+  body: {
+    status: boolean;
+    message: string;
+    data: {
+      csv?: {
+        name: string;
+      };
+      dataInfo: {}[];
+      map?: {
+        name: string;
+      };
+      uuid: string;
+    };
+  };
 }
 
-export default class UploaderComponent extends Component<UploaderComponentArgs> {
+export default class UploaderComponent extends Component {
+  @service declare state: State;
+
   get uploadButtonDisabled() {
     return !(this.mapUploaded && (this.csvUploaded || this.typedPlaces));
   }
+
   @tracked typedPlaces = "";
 
   @tracked errorMessage = "";
@@ -51,13 +71,6 @@ export default class UploaderComponent extends Component<UploaderComponentArgs> 
       type === "text/csv"
         ? (this.csvUploaded = true)
         : (this.mapUploaded = true);
-      // let fileKey = "map";
-      // if (file.type === "text/csv") {
-      //   fileKey = "csv";
-      // }
-      // const response = await file.upload(this.uploadUrl, { fileKey });
-      // console.log("got response", response);
-      // return response;
     } catch (error) {
       console.log(error);
       // file.state = "aborted";
@@ -66,12 +79,37 @@ export default class UploaderComponent extends Component<UploaderComponentArgs> 
 
   @action
   async uploadFiles(queue: Queue) {
-    return queue;
+    try {
+      for (const file of queue.files) {
+        let fileKey = "map";
+        if (file.type === "text/csv") {
+          fileKey = "csv";
+        }
+        const response = (await file.upload(this.uploadUrl, {
+          fileKey,
+        })) as UploadResponse;
+        const { data } = response.body;
+        if (data.csv?.name) {
+          this.state.placeUuid = data.uuid;
+          this.state.placeData = data.dataInfo;
+        }
+        if (data.map?.name) {
+          this.state.mapUuid = data.uuid;
+        }
+      }
+
+      this.state.typedPlaces = this.typedPlaces;
+      this.state.step = "place";
+
+      return this.state.step;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
   }
 
   @action
   flushQueue(queue: Queue): void {
-    console.log("fixina flush the q");
     queue.files.forEach(file => queue.remove(file));
     console.log(queue);
   }
