@@ -1,5 +1,12 @@
-<LeafletMap @lat={{this.lat}} @lng={{this.lng}} @zoom={{this.zoom}} as |layers| >
-  <layers.tile @url={{this.tileUrl}}/>
+<LeafletMap 
+  @lat={{0}} 
+  @lng={{0}} 
+  @zoom={{1}} 
+  @crs={{this.crs}}
+  @maxZoom={{this.maxZoom}}
+  @onLoad={{this.handleLoad}}
+  as |layers| >
+  <layers.tile @url={{this.tileUrl}} @zoomOffset={{-1}}/>
 
   {{!-- Specify child layer components here --}}
 </LeafletMap>

@@ -13,12 +13,21 @@ interface UploadResponse {
     status: boolean;
     message: string;
     data: {
+      tileInfo: {
+        format: string;
+        width: number;
+        height: number;
+        channels: number;
+        premultiplied: boolean;
+        size: number;
+      };
       csv?: {
         name: string;
       };
       dataInfo: {}[];
       map?: {
         name: string;
+        maxZoom: number;
       };
       uuid: string;
     };
@@ -88,11 +97,14 @@ export default class UploaderComponent extends Component {
         })) as UploadResponse;
         const { data } = response.body;
         if (data.csv?.name) {
-          this.state.placeUuid = data.uuid;
-          this.state.placeData = data.dataInfo;
+          this.state.placesUuid = data.uuid;
+          this.state.placesData = data.dataInfo;
         }
         if (data.map?.name) {
           this.state.mapUuid = data.uuid;
+          this.state.width = data.tileInfo.width;
+          this.state.height = data.tileInfo.height;
+          this.state.maxZoom = data.map.maxZoom;
         }
       }
 
@@ -109,6 +121,5 @@ export default class UploaderComponent extends Component {
   @action
   flushQueue(queue: Queue): void {
     queue.files.forEach(file => queue.remove(file));
-    console.log(queue);
   }
 }
