@@ -58,6 +58,7 @@
     "@types/leaflet": "^1.7.9",
     "@types/qunit": "^2.11.3",
     "@types/rsvp": "^4.0.4",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
     "autoprefixer": "^10.4.2",
@@ -81,8 +82,10 @@
     "ember-leaflet": "^5.0.0",
     "ember-load-initializers": "^2.1.2",
     "ember-page-title": "^7.0.0",
+    "ember-power-select": "^5.0.4",
     "ember-qunit": "^5.1.5",
     "ember-resolver": "^8.0.3",
+    "ember-select": "^0.8.3",
     "ember-source": "~4.2.0",
     "ember-svg-jar": "^2.3.4",
     "ember-template-lint": "^4.2.0",
@@ -112,5 +115,8 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependencies": {
+    "uuid": "^8.3.2"
   }
 }

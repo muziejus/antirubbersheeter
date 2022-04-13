@@ -1,12 +1,51 @@
+{{#if this.state.placesData}}
+  <div class="relative z-[2000]">
+    <label for="places-data-column-select">Places data column for popups</label>
+    <PowerSelect
+      @selected={{this.state.placesDataNameColumn}}
+      @options={{this.keys}}
+      @onChange={{this.setPlacesDataNameColumn}}
+      @triggerId="places-data-column-select"
+      @dropdownClass="z-[2000]"
+      as |key|>
+      {{key}}
+    </PowerSelect>
+
+  </div>
+{{/if}}
+
 <LeafletMap 
   @lat={{0}} 
   @lng={{0}} 
   @zoom={{1}} 
   @crs={{this.crs}}
+  @closePopupOnClick={{false}}
   @maxZoom={{this.maxZoom}}
   @onLoad={{this.handleLoad}}
   as |layers| >
   <layers.tile @url={{this.tileUrl}} @zoomOffset={{-1}}/>
 
-  {{!-- Specify child layer components here --}}
+  {{#each this.state.places as |place index|}}
+    <layers.marker
+      @icon={{color-marker index}}
+      @draggable={{true}}
+      @lat={{place.antirubbersheeterLat}}
+      @lng={{place.antirubbersheeterLng}}
+      @onDragend={{this.updateCoordinates}}
+      @title={{place.antirubbersheeterId}}
+      as |marker|
+    >
+      <marker.popup @popupOpen={{eq index this.lastPlaceIndex}}>
+        {{#let (get place this.state.placesDataNameColumn) as |name|}}
+          <p>{{if name name (concat "(no value given in column “" this.state.placesDataNameColumn "”)")}}</p>
+        {{/let}}
+      </marker.popup>
+    </layers.marker>
+  {{/each}}
 </LeafletMap>
+
+<p>this should be its own component, as should the markers above and, ultimately, even the power select.</p>
+
+<div class="h-[50vh] overflow-auto">
+  <pre>{{this.jsonedPlaces}}</pre>
+</div>
