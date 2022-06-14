@@ -1,5 +1,4 @@
 import Component from "@glimmer/component";
-import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import State from "antirubbersheeter/services/state";
@@ -11,10 +10,14 @@ interface AntirubbersheeterLeafletEvent extends LeafletEvent {
   target: Map;
 }
 
+interface PlaceData extends Place {
+  antirubbersheeterLat: number;
+  antirubbersheeterLng: number;
+  antirubbersheeterId: string;
+}
+
 export default class MapComponent extends Component {
   @service declare state: State;
-
-  // @tracked columnValue = "";
 
   get keys() {
     if (this.state.placesData) {
@@ -29,7 +32,7 @@ export default class MapComponent extends Component {
   }
 
   get tileUrl() {
-    return `${this.state.uploadUrl}s/${this.state.mapUuid}/tiles/{z}/{y}/{x}.png`;
+    return `${this.state.serverUrl}/s/${this.state.mapUuid}/tiles/{z}/{y}/{x}.png`;
   }
 
   get maxZoom() {
@@ -78,11 +81,18 @@ export default class MapComponent extends Component {
     } else {
       this.state.placesDataNameColumn = this.keys[0];
       this.state.places = this.state.placesData.map(place => {
-        place.antirubbersheeterLat = randomize(center.lat);
-        place.antirubbersheeterLng = randomize(center.lng);
-        place.antirubbersheeterId = randomUUID();
+        const antirubbersheeterLat = randomize(center.lat);
+        const antirubbersheeterLng = randomize(center.lng);
+        const antirubbersheeterId = randomUUID();
 
-        return place;
+        const placeData: PlaceData = {
+          antirubbersheeterId,
+          antirubbersheeterLat,
+          antirubbersheeterLng,
+          ...place,
+        };
+
+        return placeData;
       });
     }
   }
@@ -100,5 +110,25 @@ export default class MapComponent extends Component {
     )[0];
     place.antirubbersheeterLat = newLatLng.lat;
     place.antirubbersheeterLng = newLatLng.lng;
+  }
+
+  @action
+  async moveToDownload() {
+    const body: BundleData = {
+      mapUuid: this.state.mapUuid,
+      csvUuid: this.state.placesUuid,
+      places: this.state.places,
+    };
+
+    const response = await fetch(`${this.state.serverUrl}/bundle`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    console.log(response.json());
   }
 }

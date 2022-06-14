@@ -7,3 +7,10 @@
 
 // export {};
 //
+interface BundleData {
+  mapUuid: string;
+  csvUuid?: string;
+  places: Record<string, string | number>[];
+}
+
+type Place = Record<string, string | number>;

@@ -34,13 +34,13 @@ export default class StateService extends Service {
 
   @tracked placesUuid = "";
 
-  uploadUrl = "http://localhost:8080/upload";
+  serverUrl = "http://localhost:8080/";
 
   // @tracked placesData: Record<string, string | number>[] = [];
 
   @tracked placesDataNameColumn = "name";
 
-  @tracked places: Record<string, string | number>[] = [];
+  @tracked places: Place[] = [];
 }
 
 // DO NOT DELETE: this is how TypeScript knows how to look up your services.

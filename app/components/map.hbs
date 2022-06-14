@@ -26,26 +26,10 @@
   <layers.tile @url={{this.tileUrl}} @zoomOffset={{-1}}/>
 
   {{#each this.state.places as |place index|}}
-    <layers.marker
-      @icon={{color-marker index}}
-      @draggable={{true}}
-      @lat={{place.antirubbersheeterLat}}
-      @lng={{place.antirubbersheeterLng}}
-      @onDragend={{this.updateCoordinates}}
-      @title={{place.antirubbersheeterId}}
-      as |marker|
-    >
-      <marker.popup @popupOpen={{eq index this.lastPlaceIndex}}>
-        {{#let (get place this.state.placesDataNameColumn) as |name|}}
-          <p>{{if name name (concat "(no value given in column “" this.state.placesDataNameColumn "”)")}}</p>
-        {{/let}}
-      </marker.popup>
-    </layers.marker>
+    <Map::Marker @layers={{layers}} @place={{place}} @index={{index}} />
   {{/each}}
 </LeafletMap>
 
-<p>this should be its own component, as should the markers above and, ultimately, even the power select.</p>
+<Map::JsonReport @json={{this.jsonedPlaces}} />
 
-<div class="h-[50vh] overflow-auto">
-  <pre>{{this.jsonedPlaces}}</pre>
-</div>
+<button {{on "click" this.moveToDownload}}>Save Changes and Download Places Data</button>
