@@ -3,7 +3,7 @@ import Queue from "ember-file-upload/queue";
 
 interface QueueTableComponentArgs {
   queue: Queue;
-  typedPlaces: string;
+  inputtedPlaceNames: string;
 }
 
 export default class QueueTableComponent extends Component<QueueTableComponentArgs> {

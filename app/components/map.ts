@@ -69,8 +69,8 @@ export default class MapComponent extends Component {
     const randomize = (coordinate: number) =>
       coordinate + 2 * (Math.random() - 0.5);
 
-    if (this.state.typedPlaces) {
-      this.state.places = this.state.typedPlaces.split(",").map(name => {
+    if (this.state.inputtedPlaceNames) {
+      this.state.places = this.state.inputtedPlaceNames.split(",").map(name => {
         return {
           antirubbersheeterId: randomUUID(),
           name: name.trim(),

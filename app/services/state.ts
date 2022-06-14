@@ -13,7 +13,7 @@ export default class StateService extends Service {
 
   @tracked mapUuid = "020bc7c3-9b9a-4766-8f58-91aad87e888e";
 
-  // @tracked typedPlaces = "Foo, bar, malinque, melody, adriana";
+  // @tracked inputtedPlaceNames = "Foo, bar, malinque, melody, adriana";
 
   @tracked placesData = places;
 
@@ -28,9 +28,9 @@ export default class StateService extends Service {
   @tracked maxZoom = 0;
 
   @tracked mapUuid = "";
-
-  @tracked typedPlaces = "";
   */
+
+  @tracked inputtedPlaceNames = "";
 
   @tracked placesUuid = "";
 

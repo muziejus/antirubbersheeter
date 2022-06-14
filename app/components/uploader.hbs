@@ -37,7 +37,7 @@
       <p>{{this.errorMessage}}</p>
     {{/if}}
     {{#if queue.files.length}}
-      <QueueTable @queue={{queue}} @typedPlaces={{this.typedPlaces}}/>
+      <QueueTable @queue={{queue}} @inputtedPlaceNames={{this.inputtedPlaceNames}}/>
       <div class="space-x-3 flex flex-row w-full justify-end">
       <Button class="bg-gray text-xl w-1/4" {{on "click" (fn this.flushQueue queue) }}>
         Reset

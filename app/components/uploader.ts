@@ -38,10 +38,10 @@ export default class UploaderComponent extends Component {
   @service declare state: State;
 
   get uploadButtonDisabled() {
-    return !(this.mapUploaded && (this.csvUploaded || this.typedPlaces));
+    return !(this.mapUploaded && (this.csvUploaded || this.inputtedPlaceNames));
   }
 
-  @tracked typedPlaces = "";
+  @tracked inputtedPlaceNames = "";
 
   @tracked errorMessage = "";
 
@@ -92,7 +92,7 @@ export default class UploaderComponent extends Component {
         if (file.type === "text/csv") {
           fileKey = "csv";
         }
-        const response = (await file.upload(this.state.uploadUrl, {
+        const response = (await file.upload(`${this.state.uploadUrl}/upload`, {
           fileKey,
         })) as UploadResponse;
         const { data } = response.body;
@@ -108,7 +108,7 @@ export default class UploaderComponent extends Component {
         }
       }
 
-      this.state.typedPlaces = this.typedPlaces;
+      this.state.inputtedPlaceNames = this.inputtedPlaceNames;
       this.state.step = "place";
 
       return this.state.step;
