@@ -10,12 +10,6 @@ interface AntirubbersheeterLeafletEvent extends LeafletEvent {
   target: Map;
 }
 
-interface PlaceData extends Place {
-  antirubbersheeterLat: number;
-  antirubbersheeterLng: number;
-  antirubbersheeterId: string;
-}
-
 export default class MapComponent extends Component {
   @service declare state: State;
 
@@ -117,7 +111,7 @@ export default class MapComponent extends Component {
     const body: BundleData = {
       mapUuid: this.state.mapUuid,
       csvUuid: this.state.placesUuid,
-      places: this.state.places,
+      places: this.state.places as PlaceData[],
     };
 
     const response = await fetch(`${this.state.serverUrl}/bundle`, {

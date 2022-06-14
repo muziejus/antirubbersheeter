@@ -10,7 +10,13 @@
 interface BundleData {
   mapUuid: string;
   csvUuid?: string;
-  places: Record<string, string | number>[];
+  places: PlaceData[];
 }
 
 type Place = Record<string, string | number>;
+
+interface PlaceData extends Place {
+  antirubbersheeterLat: number;
+  antirubbersheeterLng: number;
+  antirubbersheeterId: string;
+}
