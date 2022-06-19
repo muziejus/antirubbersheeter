@@ -39,12 +39,12 @@
     {{#if queue.files.length}}
       <QueueTable @queue={{queue}} @inputtedPlaceNames={{this.inputtedPlaceNames}}/>
       <div class="space-x-3 flex flex-row w-full justify-end">
-      <Button class="bg-gray text-xl w-1/4" {{on "click" (fn this.flushQueue queue) }}>
+      <Button class="bg-gray w-1/4" {{on "click" (fn this.flushQueue queue) }}>
         Reset
       </Button>
-      <Button class="text-xl w-1/4" @disabled={{this.uploadButtonDisabled}}
+      <Button class="w-1/4" @disabled={{this.uploadButtonDisabled}}
         {{on "click" (fn this.uploadFiles queue) }}>
-        Upload
+        {{if this.uploadButtonDisabled "No Spatial Data" "Upload"}}
       </Button>
       </div>
     {{/if}}
