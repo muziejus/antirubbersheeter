@@ -62,17 +62,16 @@ export default class MapComponent extends Component {
       this.state.maxZoom
     );
 
-    const center = L.latLng([southwestCorner.lat / 2, northeastCorner.lng / 2]);
-
-    target.setView(center, 1);
     this.mapBounds = L.latLngBounds(southwestCorner, northeastCorner);
-    target.setMaxBounds(this.mapBounds);
-    target.fitBounds(this.mapBounds);
 
-    this.setPlaces(center);
+    target.setView(this.mapBounds.getCenter(), 1);
+    target.setMaxBounds(this.mapBounds);
+
+    this.setPlaces(this.mapBounds.getCenter(), target);
+    target.fitBounds(this.mapBounds);
   }
 
-  setPlaces(center: L.LatLng) {
+  setPlaces(center: LatLng, map: Map) {
     const randomize = (coordinate: number) =>
       coordinate + 2 * (Math.random() - 0.5);
 
@@ -102,10 +101,25 @@ export default class MapComponent extends Component {
         return placeData;
       });
     }
+
+    // For some reason, calling fitBounds here and above lets the popups line up
+    // with the markers.
+    map.fitBounds(this.mapBounds);
   }
 
   @action setPlacesDataNameColumn(selection: string) {
     this.state.placesDataNameColumn = selection;
+  }
+
+  @action updateCoordinates(el: LeafletEvent) {
+    const uuid = el.target.options.title;
+    const newLatLng = el.target._latlng;
+
+    const place = this.state.places.filter(
+      place => place.antirubbersheeterId === uuid
+    )[0];
+    place.antirubbersheeterLat = newLatLng.lat;
+    place.antirubbersheeterLng = newLatLng.lng;
   }
 
   @action
