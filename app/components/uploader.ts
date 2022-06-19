@@ -92,12 +92,15 @@ export default class UploaderComponent extends Component {
         if (file.type === "text/csv") {
           fileKey = "csv";
         }
-        const response = (await file.upload(`${this.state.uploadUrl}/upload`, {
-          fileKey,
-        })) as UploadResponse;
+        const response = (await file.upload(
+          `${this.state.serverUrl}/upload-data`,
+          {
+            fileKey,
+          }
+        )) as UploadResponse;
         const { data } = response.body;
         if (data.csv?.name) {
-          this.state.placesUuid = data.uuid;
+          this.state.csvUuid = data.uuid;
           this.state.placesData = data.dataInfo;
         }
         if (data.map?.name) {

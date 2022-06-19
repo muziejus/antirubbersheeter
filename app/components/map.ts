@@ -1,17 +1,25 @@
 import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import State from "antirubbersheeter/services/state";
 import L from "leaflet";
-import type { LeafletEvent, Map } from "leaflet";
+import type { LeafletEvent, Map, LatLngBounds, LatLng } from "leaflet";
 import { v4 as randomUUID } from "uuid";
 
 interface AntirubbersheeterLeafletEvent extends LeafletEvent {
   target: Map;
+  latlng: LatLng;
+}
+
+interface BundlerResponse {
+  zipfileUri: string;
 }
 
 export default class MapComponent extends Component {
   @service declare state: State;
+
+  @tracked declare mapBounds: LatLngBounds;
 
   get keys() {
     if (this.state.placesData) {
@@ -26,7 +34,7 @@ export default class MapComponent extends Component {
   }
 
   get tileUrl() {
-    return `${this.state.serverUrl}/s/${this.state.mapUuid}/tiles/{z}/{y}/{x}.png`;
+    return `${this.state.serverUrl}/uploads/${this.state.mapUuid}/tiles/{z}/{y}/{x}.png`;
   }
 
   get maxZoom() {
@@ -38,6 +46,11 @@ export default class MapComponent extends Component {
   }
 
   crs = L.CRS.Simple;
+
+  @action handleClick(event: AntirubbersheeterLeafletEvent) {
+    console.log(event.target.getZoom());
+    console.log(event.latlng.lat, event.latlng.lng);
+  }
 
   @action handleLoad({ target }: AntirubbersheeterLeafletEvent) {
     const southwestCorner = target.unproject(
@@ -52,9 +65,9 @@ export default class MapComponent extends Component {
     const center = L.latLng([southwestCorner.lat / 2, northeastCorner.lng / 2]);
 
     target.setView(center, 1);
-    const bounds = L.latLngBounds(southwestCorner, northeastCorner);
-    target.setMaxBounds(bounds);
-    target.fitBounds(bounds);
+    this.mapBounds = L.latLngBounds(southwestCorner, northeastCorner);
+    target.setMaxBounds(this.mapBounds);
+    target.fitBounds(this.mapBounds);
 
     this.setPlaces(center);
   }
@@ -95,26 +108,29 @@ export default class MapComponent extends Component {
     this.state.placesDataNameColumn = selection;
   }
 
-  @action updateCoordinates(el: LeafletEvent) {
-    const uuid = el.target.options.title;
-    const newLatLng = el.target._latlng;
-
-    const place = this.state.places.filter(
-      place => place.antirubbersheeterId === uuid
-    )[0];
-    place.antirubbersheeterLat = newLatLng.lat;
-    place.antirubbersheeterLng = newLatLng.lng;
-  }
-
   @action
   async moveToDownload() {
+    const northWest = this.mapBounds.getNorthWest();
+    const southEast = this.mapBounds.getSouthEast();
     const body: BundleData = {
+      popupField: this.state.placesDataNameColumn,
+      bounds: {
+        northWest: {
+          lat: northWest.lat,
+          lng: northWest.lng,
+        },
+        southEast: {
+          lat: southEast.lat,
+          lng: southEast.lng,
+        },
+      },
+      maxZoom: this.maxZoom,
       mapUuid: this.state.mapUuid,
-      csvUuid: this.state.placesUuid,
+      csvUuid: this.state.csvUuid,
       places: this.state.places as PlaceData[],
     };
 
-    const response = await fetch(`${this.state.serverUrl}/bundle`, {
+    const response = await fetch(`${this.state.serverUrl}/create-bundle`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -123,6 +139,10 @@ export default class MapComponent extends Component {
       body: JSON.stringify(body),
     });
 
-    console.log(response.json());
+    const { zipfileUri } = (await response.json()) as BundlerResponse;
+
+    this.state.zipfileUri = zipfileUri;
+
+    this.state.step = "download";
   }
 }

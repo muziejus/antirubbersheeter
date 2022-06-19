@@ -21,15 +21,18 @@
   @crs={{this.crs}}
   @closePopupOnClick={{false}}
   @maxZoom={{this.maxZoom}}
+  @onClick={{this.handleClick}}
   @onLoad={{this.handleLoad}}
   as |layers| >
   <layers.tile @url={{this.tileUrl}} @zoomOffset={{-1}}/>
 
   {{#each this.state.places as |place index|}}
-    <Map::Marker @layers={{layers}} @place={{place}} @index={{index}} />
+    <Map::Marker 
+      @layers={{layers}} 
+      @place={{place}} 
+      @index={{index}} 
+      @lastPlaceIndex={{this.lastPlaceIndex}}/>
   {{/each}}
 </LeafletMap>
 
-<Map::JsonReport @json={{this.jsonedPlaces}} />
-
-<button {{on "click" this.moveToDownload}}>Save Changes and Download Places Data</button>
+<Button {{on "click" this.moveToDownload}}>Save Changes and Bundle Tiles with Data</Button>

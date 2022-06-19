@@ -8,7 +8,7 @@
     @title={{@place.antirubbersheeterId}}
     as |marker|
   >
-    <marker.popup @popupOpen={{eq @index this.lastPlaceIndex}}>
+    <marker.popup @popupOpen={{eq @index @lastPlaceIndex}}>
       {{#let (get @place this.state.placesDataNameColumn) as |name|}}
         <p>{{if name name (concat "(no value given in column “" this.state.placesDataNameColumn "”)")}}</p>
       {{/let}}

@@ -1,9 +1,7 @@
 import Component from "@glimmer/component";
+import { service } from "@ember/service";
+import StateService from "antirubbersheeter/services/state";
 
-interface DownloaderComponentArgs {
-  boo: unknown;
-}
-
-export default class DownloaderComponent extends Component<DownloaderComponentArgs> {
-  true = true;
+export default class DownloaderComponent extends Component {
+  @service declare state: StateService;
 }
