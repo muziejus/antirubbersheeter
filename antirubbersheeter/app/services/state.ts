@@ -35,7 +35,7 @@ export default class StateService extends Service {
 
   @tracked zipfileUri: string = "";
 
-  serverUrl = "http://localhost:8080";
+  serverUrl = "http://localhost:8989";
 }
 
 // DO NOT DELETE: this is how TypeScript knows how to look up your services.

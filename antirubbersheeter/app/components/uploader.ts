@@ -97,7 +97,7 @@ export default class UploaderComponent extends Component {
           {
             fileKey,
           }
-        )) as UploadResponse;
+        )) as unknown as UploadResponse;
         const { data } = response.body;
         if (data.csv?.name) {
           this.state.csvUuid = data.uuid;
