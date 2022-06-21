@@ -75,7 +75,7 @@
     "ember-data": "~4.2.0",
     "ember-export-application-global": "^2.0.1",
     "ember-fetch": "^8.1.1",
-    "ember-file-upload": "^5.0.0-beta.8",
+    "ember-file-upload": "^7.0.0",
     "ember-leaflet": "^5.0.0",
     "ember-load-initializers": "^2.1.2",
     "ember-page-title": "^7.0.0",

@@ -1,8 +1,7 @@
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
-import UploadFile from "ember-file-upload/upload-file";
-import Queue from "ember-file-upload/queue";
+import { UploadFile, Queue } from "ember-file-upload";
 import { inject as service } from "@ember/service";
 import State from "antirubbersheeter/services/state";
 

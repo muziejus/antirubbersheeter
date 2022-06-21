@@ -1,5 +1,5 @@
 import Component from "@glimmer/component";
-import Queue from "ember-file-upload/queue";
+import { Queue } from "ember-file-upload";
 
 interface QueueTableComponentArgs {
   queue: Queue;

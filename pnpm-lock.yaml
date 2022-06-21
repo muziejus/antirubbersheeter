@@ -14,7 +14,7 @@ importers:
       prettier: 2.6.2
       typescript: 4.7.2
 
-  ember-front-end:
+  antirubbersheeter:
     specifiers:
       '@babel/core': ^7.17.5
       '@ember/optional-features': ^2.0.0
@@ -72,7 +72,7 @@ importers:
       ember-data: ~4.2.0
       ember-export-application-global: ^2.0.1
       ember-fetch: ^8.1.1
-      ember-file-upload: ^5.0.0-beta.8
+      ember-file-upload: ^7.0.0
       ember-leaflet: ^5.0.0
       ember-load-initializers: ^2.1.2
       ember-page-title: ^7.0.0
@@ -140,7 +140,7 @@ importers:
       '@types/ember-qunit': 5.0.0
       '@types/ember-resolver': 5.0.11
       '@types/htmlbars-inline-precompile': 3.0.0
-      '@types/leaflet': 1.7.10
+      '@types/leaflet': 1.7.11
       '@types/qunit': 2.11.3
       '@types/rsvp': 4.0.4
       '@types/uuid': 8.3.4
@@ -163,7 +163,7 @@ importers:
       ember-data: 4.2.0_w2i5cy6pptznn7rmavsgpnxasa
       ember-export-application-global: 2.0.1
       ember-fetch: 8.1.1
-      ember-file-upload: 5.1.0_w2i5cy6pptznn7rmavsgpnxasa
+      ember-file-upload: 7.0.0_7t62nhgn4wgugnioozyio7vakq
       ember-leaflet: 5.0.1_yqm4kcl44wep5ah4edizqp5tca
       ember-load-initializers: 2.1.2_@babel+core@7.18.2
       ember-page-title: 7.0.0
@@ -195,7 +195,7 @@ importers:
       typescript: 4.7.2
       webpack: 5.72.1
 
-  express-back-end:
+  antirubbersheeter-server:
     specifiers:
       '@babel/cli': ^7.17.6
       '@babel/core': ^7.17.5
@@ -2315,6 +2315,14 @@ packages:
       - supports-color
     dev: true
 
+  /@embroider/addon-shim/1.8.0:
+    resolution: {integrity: sha512-iMD9Yzx24WY0/K42if2piWzkw+BFCpqxwbPaNWFqlTbNGzzd1UnNiFhtdjXT5vTyYSQRgbQwuFcr/04Rh8qF8A==}
+    engines: {node: 12.* || 14.* || >= 16}
+    dependencies:
+      '@embroider/shared-internals': 1.8.0
+      semver: 7.3.7
+    dev: true
+
   /@embroider/babel-loader-8/1.6.0_5ovjoofw6igcgzch6q3omcfzve:
     resolution: {integrity: sha512-re/fAMTBFqO8le8yrSz5Zc7p3w4Y8ZlYUMl2Y1L0p6/bHxhQ4lbUpsP4mAWo6rySSdwUpk9CUyWtHUHK1S1Whg==}
     engines: {node: 12.* || 14.* || >= 16}
@@ -2542,6 +2550,20 @@ packages:
 
   /@embroider/shared-internals/1.7.1:
     resolution: {integrity: sha512-qT7i3EnOogwvi6xRl7wjJmx27rLlUZG6B6HJXAKXvZOyGFVs0GnQKIJX+7zX2PZAcqlpqhmdWm9MPdrof0dj5g==}
+    engines: {node: 12.* || 14.* || >= 16}
+    dependencies:
+      babel-import-util: 1.2.2
+      ember-rfc176-data: 0.3.17
+      fs-extra: 9.1.0
+      js-string-escape: 1.0.1
+      lodash: 4.17.21
+      resolve-package-path: 4.0.3
+      semver: 7.3.7
+      typescript-memoize: 1.1.0
+    dev: true
+
+  /@embroider/shared-internals/1.8.0:
+    resolution: {integrity: sha512-TsjApG80SDVZ+dxkshO4FtzwzZYupmyl1w3Bnehfbk1429dsv30K+/DhcxDFIlKXPtsvCF9mdQY3mYUs+hoLOg==}
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       babel-import-util: 1.2.2
@@ -3273,12 +3295,6 @@ packages:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
       '@types/node': 17.0.38
-    dev: true
-
-  /@types/leaflet/1.7.10:
-    resolution: {integrity: sha512-RzK5BYwYboOXXxyF01tp8g1J8UbdRvoaf+F/jCnVaWC42+QITB6wKvUklcX7jCMRWkzTnGO9NLg7A6SzrlGALA==}
-    dependencies:
-      '@types/geojson': 7946.0.8
     dev: true
 
   /@types/leaflet/1.7.11:
@@ -7714,7 +7730,7 @@ packages:
       '@babel/preset-env': 7.18.2_@babel+core@7.18.2
       '@babel/traverse': 7.18.2
       '@babel/types': 7.18.4
-      '@embroider/shared-internals': 1.7.1
+      '@embroider/shared-internals': 1.8.0
       babel-core: 6.26.3
       babel-loader: 8.2.5_lzsemofhph6vepnub4bnemnm6m
       babel-plugin-syntax-dynamic-import: 6.18.0
@@ -8561,9 +8577,9 @@ packages:
       - supports-color
     dev: true
 
-  /ember-file-upload/5.1.0_w2i5cy6pptznn7rmavsgpnxasa:
-    resolution: {integrity: sha512-TJ14tePrV+tXxqll+Vqrxt5MbSdQjqe43Ej1PNa123R36pEFNJjtLu3xpHX0vVBKZ8M+rFMpcB9a/+LSd9hXJw==}
-    engines: {node: 12.* || 14.* || >= 16}
+  /ember-file-upload/7.0.0_7t62nhgn4wgugnioozyio7vakq:
+    resolution: {integrity: sha512-8vtTmdw2Cbu7LA0B4sURSHgctbTwU9Zc6+uDmg7/2/+m/Cg8by+TfTyXU6LyLVEmqFJjd/Ir6reER3T3nbLVFg==}
+    engines: {node: 14.* || 16.* || >= 18}
     peerDependencies:
       ember-cli-mirage: '*'
       miragejs: '*'
@@ -8573,19 +8589,18 @@ packages:
       miragejs:
         optional: true
     dependencies:
+      '@ember/test-helpers': 2.8.1_zt5pd3rktjo6rnpecuevm7izj4
       '@ember/test-waiters': 3.0.2
+      '@embroider/addon-shim': 1.8.0
       '@embroider/macros': 1.7.1
       '@glimmer/component': 1.1.2_@babel+core@7.18.2
       '@glimmer/tracking': 1.1.2
-      broccoli-funnel: 3.0.8
       ember-auto-import: 2.4.2_webpack@5.72.1
-      ember-cli-babel: 7.26.11
-      ember-cli-htmlbars: 6.0.1
-      ember-cli-typescript: 5.1.0
       ember-modifier: 3.2.7_@babel+core@7.18.2
-      tracked-built-ins: 2.0.1
+      tracked-built-ins: 3.1.0
     transitivePeerDependencies:
       - '@babel/core'
+      - ember-source
       - supports-color
       - webpack
     dev: true
@@ -15588,25 +15603,12 @@ packages:
       punycode: 2.1.1
     dev: true
 
-  /tracked-built-ins/2.0.1:
-    resolution: {integrity: sha512-v0DwPVNm3zA4cmJLpcBJxJfKefN6ldhkc8l5YA+cWHq7kI8WMUcXjIXgl/AIxmt1SoO1bwPdpikPRHHrIBDtFQ==}
-    engines: {node: 12.* || >= 14.*}
+  /tracked-built-ins/3.1.0:
+    resolution: {integrity: sha512-yPEZV1aYaw7xFWdoEluvdwNxIJIA834HaBQaMATjNAYPwd1fRqIJ46YnuRo6+9mRRWu6nM6sJqrVVa5H6UhFuw==}
+    engines: {node: 14.* || 16.* || >= 18.*}
     dependencies:
       ember-cli-babel: 7.26.11
-      ember-cli-typescript: 4.2.1
-      ember-tracked-storage-polyfill: 1.0.0
-      tracked-maps-and-sets: 3.0.2
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  /tracked-maps-and-sets/3.0.2:
-    resolution: {integrity: sha512-UIRcWsX1kDOcC/Q2R58weYWlw01EnmWWBwUv3okWS+zMBvsgIfYoO6veHhuNE3hgzWCEImNp46QS5CyKnw5QUA==}
-    engines: {node: 12.* || >= 14}
-    dependencies:
-      '@glimmer/tracking': 1.1.2
-      ember-cli-babel: 7.26.11
-      ember-cli-typescript: 4.2.1
+      ember-cli-typescript: 5.1.0
       ember-tracked-storage-polyfill: 1.0.0
     transitivePeerDependencies:
       - supports-color
