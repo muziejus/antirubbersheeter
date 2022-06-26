@@ -17,6 +17,7 @@ importers:
   antirubbersheeter:
     specifiers:
       '@babel/core': ^7.17.5
+      '@babel/eslint-parser': ^7.16.3
       '@ember/optional-features': ^2.0.0
       '@ember/test-helpers': ^2.6.0
       '@embroider/compat': 1.6.0
@@ -56,7 +57,6 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.14.0
       '@typescript-eslint/parser': ^5.14.0
       autoprefixer: ^10.4.2
-      babel-eslint: ^10.1.0
       broccoli-asset-rev: ^3.0.0
       ember-auto-import: ^2.4.0
       ember-cli: ~4.2.0
@@ -108,6 +108,7 @@ importers:
       uuid: 8.3.2
     devDependencies:
       '@babel/core': 7.18.2
+      '@babel/eslint-parser': 7.18.2_k2frvhnwhyewn52hbgubltwwhi
       '@ember/optional-features': 2.0.0
       '@ember/test-helpers': 2.8.1_zt5pd3rktjo6rnpecuevm7izj4
       '@embroider/compat': 1.6.0_@embroider+core@1.6.0
@@ -147,7 +148,6 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.27.0_ooh2c75fp6fgtlhgtsiolt5b2u
       '@typescript-eslint/parser': 5.27.0_r6wgjs2cmdapk4bysm6dglulo4
       autoprefixer: 10.4.7_postcss@8.4.14
-      babel-eslint: 10.1.0_eslint@7.32.0
       broccoli-asset-rev: 3.0.0
       ember-auto-import: 2.4.2_webpack@5.72.1
       ember-cli: 4.2.0
@@ -366,6 +366,20 @@ packages:
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@babel/eslint-parser/7.18.2_k2frvhnwhyewn52hbgubltwwhi:
+    resolution: {integrity: sha512-oFQYkE8SuH14+uR51JVAmdqwKYXGRjEXx7s+WiagVjqQ+HPE+nnwyF2qlVG8evUsUHmPcA+6YXMEDbIhEyQc5A==}
+    engines: {node: ^10.13.0 || ^12.13.0 || >=14.0.0}
+    peerDependencies:
+      '@babel/core': '>=7.11.0'
+      eslint: ^7.5.0 || ^8.0.0
+    dependencies:
+      '@babel/core': 7.18.2
+      eslint: 7.32.0
+      eslint-scope: 5.1.1
+      eslint-visitor-keys: 2.1.0
+      semver: 6.3.0
     dev: true
 
   /@babel/eslint-parser/7.18.2_ocmtlorpgzxukonap6z7ot6pye:
@@ -4441,24 +4455,6 @@ packages:
       private: 0.1.8
       slash: 1.0.0
       source-map: 0.5.7
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  /babel-eslint/10.1.0_eslint@7.32.0:
-    resolution: {integrity: sha512-ifWaTHQ0ce+448CYop8AdrQiBsGrnC+bMgfyKFdi6EsPLTAWG+QfyDeM6OH+FmWnKvEq5NnBMLvlBUPKQZoDSg==}
-    engines: {node: '>=6'}
-    deprecated: babel-eslint is now @babel/eslint-parser. This package will no longer receive updates.
-    peerDependencies:
-      eslint: '>= 4.12.1'
-    dependencies:
-      '@babel/code-frame': 7.16.7
-      '@babel/parser': 7.18.4
-      '@babel/traverse': 7.18.2
-      '@babel/types': 7.18.4
-      eslint: 7.32.0
-      eslint-visitor-keys: 1.3.0
-      resolve: 1.22.0
     transitivePeerDependencies:
       - supports-color
     dev: true
