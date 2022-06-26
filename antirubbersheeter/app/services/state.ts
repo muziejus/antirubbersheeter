@@ -33,9 +33,9 @@ export default class StateService extends Service {
 
   @tracked places: Place[] = [];
 
-  @tracked zipfileUri: string = "";
+  @tracked zipfileUri = "";
 
-  serverUrl = "http://localhost:8989";
+  serverUrl = "https://antirubberserver-uploads.storage.googleapis.com";
 }
 
 // DO NOT DELETE: this is how TypeScript knows how to look up your services.
