@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "ember build --environment=production",
+    "build:deploy": "ember build --environment=production --output-path ../dist",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
     "lint:hbs": "ember-template-lint .",
@@ -16,8 +17,7 @@
     "lint:js:fix": "eslint --color --format=pretty . --fix",
     "start": "ember serve",
     "test": "npm-run-all lint test:*",
-    "test:ember": "ember test",
-    "deploy": "ember deploy --activate=true production"
+    "test:ember": "ember test"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
@@ -70,12 +70,6 @@
     "ember-cli-app-version": "^5.0.0",
     "ember-cli-babel": "^7.26.11",
     "ember-cli-dependency-checker": "^3.2.0",
-    "ember-cli-deploy": "^1.0.2",
-    "ember-cli-deploy-build": "^2.0.0",
-    "ember-cli-deploy-display-revisions": "^2.1.2",
-    "ember-cli-deploy-gcloud-storage": "^1.0.1",
-    "ember-cli-deploy-gcs-index": "^1.1.0",
-    "ember-cli-deploy-revision-data": "^2.0.0",
     "ember-cli-htmlbars": "^6.0.1",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
@@ -124,6 +118,9 @@
     "edition": "octane"
   },
   "dependencies": {
+    "@google-cloud/storage": "^6.2.1",
+    "express": "^4.17.3",
+    "googleapis": "^104.0.0",
     "uuid": "^8.3.2"
   },
   "volta": {

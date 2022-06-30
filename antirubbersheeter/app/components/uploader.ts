@@ -85,35 +85,59 @@ export default class UploaderComponent extends Component {
 
   @action
   async uploadFiles(queue: Queue) {
+    console.log("about to try to get a token.");
+
+    const response = await fetch("/api");
+
+    const { accessToken } = await response.json();
+
     try {
+      console.log("trying.");
       for (const file of queue.files) {
+        //   const authorization = uploaderToken;
+        let fileName = "poopoopsnicker";
         let fileKey = "map";
         if (file.type === "text/csv") {
           fileKey = "csv";
+          fileName += ".csv";
+        } else if (file.type === "image/png") {
+          fileName += ".png";
+        } else if (file.type === "image/tiff") {
+          fileName += ".tiff";
+        } else {
+          fileName += ".jpg";
         }
-        const response = (await file.upload(
-          `${this.state.serverUrl}/upload-data`,
+        console.log(`Going to upload ${fileName}`);
+        const response = await file.uploadBinary(
+          `${this.state.serverUrl}/${fileName}`,
           {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              ContentLength: file.size,
+            },
+            method: "PUT",
             fileKey,
           }
-        )) as unknown as UploadResponse;
-        const { data } = response.body;
-        if (data.csv?.name) {
-          this.state.csvUuid = data.uuid;
-          this.state.placesData = data.dataInfo;
-        }
-        if (data.map?.name) {
-          this.state.mapUuid = data.uuid;
-          this.state.width = data.tileInfo.width;
-          this.state.height = data.tileInfo.height;
-          this.state.maxZoom = data.map.maxZoom;
-        }
+        ); //as unknown as UploadResponse;
+        console.log("body and header to follow");
+        const body = await response.body;
+        console.log(body);
       }
-
-      this.state.inputtedPlaceNames = this.inputtedPlaceNames;
-      this.state.step = "place";
-
-      return this.state.step;
+      // const { data } = response.body;
+      // if (data.csv?.name) {
+      //   this.state.csvUuid = data.uuid;
+      //   this.state.placesData = data.dataInfo;
+      // }
+      // if (data.map?.name) {
+      //   this.state.mapUuid = data.uuid;
+      //   this.state.width = data.tileInfo.width;
+      //   this.state.height = data.tileInfo.height;
+      //   this.state.maxZoom = data.map.maxZoom;
+      // }
+      // }
+      // this.state.inputtedPlaceNames = this.inputtedPlaceNames;
+      // this.state.step = "place";
+      // return this.state.step;
     } catch (error) {
       console.log(error);
       return error;

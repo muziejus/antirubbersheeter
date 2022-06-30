@@ -1,0 +1,23 @@
+runtime: nodejs16
+instance_class: F1
+
+handlers:
+- url: /api
+  secure: always
+  script: auto
+
+- url: /(.+)/
+  static_files: dist/\1/index.html
+  upload: dist/(.+)/index.html
+
+- url: /
+  static_files: dist/index.html
+  upload: dist/index.html
+
+- url: /([^\.]+)([^/])
+  static_files: dist/\1\2/index.html
+  upload: dist/(.+)
+
+- url: /(.+)
+  static_files: dist/\1
+  upload: dist/(.+)

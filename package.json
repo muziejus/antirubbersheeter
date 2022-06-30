@@ -2,10 +2,15 @@
   "private": true,
   "scripts": {
     "dev": "concurrently 'npm:dev:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-    "dev:ember": "pnpm run --filter antirubbersheeter start",
-    "dev:express": "pnpm run --filter antirubbersheeter-server dev",
-    "build": "pnpm run --filter '*' build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:ember": "yarn workspace antirubbersheeter start",
+    "dev:express": "yarn workspace antirubberserver dev",
+    "build": "yarn workspaces build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "yarn workspace antirubberserver start",
+    "predeploy:ember": "yarn workspace antirubbersheeter build:deploy",
+    "predeploy:express": "yarn workspace antirubberserver build:deploy",
+    "predeploy": "npm-run-all predeploy:ember predeploy:express",
+    "deploy": "gcloud app deploy"
   },
   "devDependencies": {
     "concurrently": "^7.2.1",
@@ -13,11 +18,16 @@
     "prettier": "^2.6.2",
     "typescript": "^4.6.4"
   },
-  "packageManager": "pnpm@7.3.0",
+  "workspaces": [
+    "antirubbersheeter",
+    "antirubberserver"
+  ],
+  "packageManager": "yarn@1.22.19",
   "volta": {
     "node": "16.15.1",
     "yarn": "1.22.19",
-    "npm": "8.12.2"
+    "npm": "8.12.2",
+    "pnpm": "7.3.0"
   },
   "repository": {
     "type": "git",
