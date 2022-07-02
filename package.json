@@ -9,7 +9,7 @@
     "start": "yarn workspace antirubberserver start",
     "predeploy:ember": "yarn workspace antirubbersheeter build:deploy",
     "predeploy:express": "yarn workspace antirubberserver build:deploy",
-    "predeploy": "npm-run-all predeploy:ember predeploy:express",
+    "predeploy": "npm-run-all predeploy:ember",
     "deploy": "gcloud app deploy"
   },
   "devDependencies": {

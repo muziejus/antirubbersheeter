@@ -36,6 +36,9 @@ export default class StateService extends Service {
   @tracked zipfileUri = "";
 
   serverUrl = "https://antirubberserver-uploads.storage.googleapis.com";
+
+  tokenFunction =
+    "https://us-central1-antirubberserver.cloudfunctions.net/getUploaderToken";
 }
 
 // DO NOT DELETE: this is how TypeScript knows how to look up your services.

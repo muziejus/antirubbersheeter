@@ -87,7 +87,9 @@ export default class UploaderComponent extends Component {
   async uploadFiles(queue: Queue) {
     console.log("about to try to get a token.");
 
-    const response = await fetch("/api");
+    const response = await fetch(this.state.tokenFunction, {
+      method: "POST",
+    });
 
     const { accessToken } = await response.json();
 
