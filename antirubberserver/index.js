@@ -1,11 +1,14 @@
 const functions = require("@google-cloud/functions-framework");
 const { google } = require("googleapis");
+const { v4 } = require("uuid");
 
 functions.http("getUploaderToken", async (req, res) => {
   res.set("Access-Control-Allow-Origin", "*");
-  res.set("Access-Control-Allow-Methods", "POST");
 
   if (req.method === "OPTIONS") {
+    res.set("Access-Control-Allow-Methods", "POST");
+    res.set("Access-Control-Allow-Headers", "Content-Type");
+    res.set("Access-Control-Max-Age", "3600");
     res.status(204).send("");
     return;
   }
@@ -26,8 +29,5 @@ functions.http("getUploaderToken", async (req, res) => {
       },
     });
 
-  console.log("response below");
-  console.log(response.data);
-
-  res.send(response.data);
+  res.send({ uuid: v4(), ...response.data });
 });
