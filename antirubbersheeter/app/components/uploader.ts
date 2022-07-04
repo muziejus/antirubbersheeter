@@ -2,36 +2,8 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
 import { UploadFile, Queue } from "ember-file-upload";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import State from "antirubbersheeter/services/state";
-
-interface UploadResponse {
-  status: number;
-  headers: {};
-  body: {
-    status: boolean;
-    message: string;
-    data: {
-      tileInfo: {
-        format: string;
-        width: number;
-        height: number;
-        channels: number;
-        premultiplied: boolean;
-        size: number;
-      };
-      csv?: {
-        name: string;
-      };
-      dataInfo: {}[];
-      map?: {
-        name: string;
-        maxZoom: number;
-      };
-      uuid: string;
-    };
-  };
-}
 
 export default class UploaderComponent extends Component {
   @service declare state: State;
@@ -85,45 +57,27 @@ export default class UploaderComponent extends Component {
 
   @action
   async uploadFiles(queue: Queue) {
-    console.log("about to try to get a token.");
-
-    const response = await fetch(this.state.tokenFunction, {
+    const tokenResponse = await fetch(this.state.tokenFunction, {
       method: "POST",
     });
 
-    const { accessToken } = await response.json();
+    const { uuid, accessToken } = await tokenResponse.json();
+    this.state.packageUuid = uuid;
 
     try {
-      console.log("trying.");
       for (const file of queue.files) {
-        //   const authorization = uploaderToken;
-        let fileName = "poopoopsnicker";
-        let fileKey = "map";
-        if (file.type === "text/csv") {
-          fileKey = "csv";
-          fileName += ".csv";
-        } else if (file.type === "image/png") {
-          fileName += ".png";
-        } else if (file.type === "image/tiff") {
-          fileName += ".tiff";
-        } else {
-          fileName += ".jpg";
-        }
-        console.log(`Going to upload ${fileName}`);
         const response = await file.uploadBinary(
-          `${this.state.serverUrl}/${fileName}`,
+          `${this.state.uploadsBucket}/${this.state.packageUuid}/${file.name}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
-              ContentLength: file.size,
+              ContentLength: file.size.toString(),
             },
             method: "PUT",
-            fileKey,
           }
-        ); //as unknown as UploadResponse;
-        console.log("body and header to follow");
-        const body = await response.body;
-        console.log(body);
+        );
+        // if(response.status === 200) {
+        // }
       }
       // const { data } = response.body;
       // if (data.csv?.name) {
