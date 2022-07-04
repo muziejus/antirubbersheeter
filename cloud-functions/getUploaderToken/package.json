@@ -1,7 +1,7 @@
 {
-  "name": "antirubberserver",
+  "name": "getUploadToken",
   "version": "0.0.0",
-  "description": "Cloud functions for the Antirubbersheeter",
+  "description": "Get an uploader token",
   "private": true,
   "scripts": {
     "build:babel": "NODE_ENV=production babel --config-file ./babel.config.js ./src --extensions .ts --out-dir ./dist",
@@ -12,10 +12,12 @@
     "lint": "eslint --color --format=pretty . --cache",
     "lint:fix": "eslint --color --format=pretty . --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "deploy": "gcloud functions deploy getUploaderToken --runtime=nodejs16 --trigger-http --region=us-east4 --allow-unauthenticated"
   },
   "dependencies": {
     "@google-cloud/functions-framework": "^3.1.2",
+    "@google-cloud/pubsub": "^3.0.1",
     "@google-cloud/storage": "^6.2.1",
     "archiver": "^5.3.1",
     "body-parser": "^1.19.2",
@@ -59,7 +61,7 @@
     "typescript": "^4.6.2"
   },
   "volta": {
-    "extends": "../package.json"
+    "extends": "../../package.json"
   },
   "engines": {
     "node": ">=16.0.0"
