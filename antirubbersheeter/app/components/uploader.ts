@@ -76,8 +76,10 @@ export default class UploaderComponent extends Component {
             method: "PUT",
           }
         );
-        // if(response.status === 200) {
-        // }
+
+        if (response.status === 200) {
+          console.log("status 200");
+        }
       }
       // const { data } = response.body;
       // if (data.csv?.name) {
