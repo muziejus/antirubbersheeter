@@ -1,82 +1,34 @@
 {
-  "updatedProjects": [
-    {
-      "buildIndex": 0,
-      "manifest": {
-        "name": "tileUpload",
-        "version": "0.0.0",
-        "description": "Tile an upload",
-        "private": true,
-        "main": "index.js",
-        "scripts": {
-          "start": "pnpx functions-framework --target=tileUpload --signature-type=cloudevent",
-          "deploy": "gcloud functions deploy tileUpload --gen2 --runtime=nodejs18 --region=us-east4 --source . --trigger-event-filters='type=google.cloud.storage.object.v1.finalized' --trigger-even-filters='bucket=antirubberserver-uploads'"
-        },
-        "volta": {
-          "extends": "../../package.json"
-        },
-        "engines": {
-          "node": ">=18.0.0"
-        },
-        "repository": {
-          "type": "git",
-          "url": "git@github.com:muziejus/antirubbersheeter.git"
-        },
-        "keywords": [
-          "javascript"
-        ],
-        "author": "Moacir P. de Sá Pereira <github@moacir.moacir.com> (http://moacir.com/)",
-        "license": "MIT",
-        "bugs": {
-          "url": "https://github.com/muziejus/antirubbersheeter/issues"
-        },
-        "homepage": "https://antirubbersheeter.moacir.com",
-        "dependencies": {
-          "@google-cloud/functions-framework": "^3.3.0"
-        }
-      },
-      "rootDir": "/Users/moacir/Projects/antirubbersheeter/cloud-functions/tileUpload",
-      "binsDir": "/Users/moacir/Projects/antirubbersheeter/cloud-functions/tileUpload/node_modules/.bin",
-      "id": "cloud-functions/tileUpload",
-      "modulesDir": "/Users/moacir/Projects/antirubbersheeter/cloud-functions/tileUpload/node_modules",
-      "originalManifest": {
-        "name": "tileUpload",
-        "version": "0.0.0",
-        "description": "Tile an upload",
-        "private": true,
-        "main": "index.js",
-        "scripts": {
-          "start": "pnpx functions-framework --target=tileUpload --signature-type=cloudevent",
-          "deploy": "gcloud functions deploy tileUpload --gen2 --runtime=nodejs18 --region=us-east4 --source . --trigger-event-filters='type=google.cloud.storage.object.v1.finalized' --trigger-even-filters='bucket=antirubberserver-uploads'"
-        },
-        "volta": {
-          "extends": "../../package.json"
-        },
-        "engines": {
-          "node": ">=18.0.0"
-        },
-        "repository": {
-          "type": "git",
-          "url": "git@github.com:muziejus/antirubbersheeter.git"
-        },
-        "keywords": [
-          "javascript"
-        ],
-        "author": "Moacir P. de Sá Pereira <github@moacir.moacir.com> (http://moacir.com/)",
-        "license": "MIT",
-        "bugs": {
-          "url": "https://github.com/muziejus/antirubbersheeter/issues"
-        },
-        "homepage": "https://antirubbersheeter.moacir.com",
-        "dependencies": {
-          "@google-cloud/functions-framework": "^3.3.0"
-        }
-      }
-    }
+  "name": "tileUpload",
+  "version": "0.0.0",
+  "description": "Tile an upload",
+  "type": "module",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "pnpx functions-framework --target=tileUpload --signature-type=cloudevent",
+    "deploy": "gcloud functions deploy tileUpload --gen2 --runtime=nodejs18 --region=us-east4 --source . --trigger-event-filters='type=google.cloud.storage.object.v1.finalized' --trigger-even-filters='bucket=antirubberserver-uploads'"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:muziejus/antirubbersheeter.git"
+  },
+  "keywords": [
+    "javascript"
   ],
-  "stats": {
-    "added": 0,
-    "removed": 0,
-    "linkedToRoot": 0
+  "author": "Moacir P. de Sá Pereira <github@moacir.moacir.com> (http://moacir.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/muziejus/antirubbersheeter/issues"
+  },
+  "homepage": "https://antirubbersheeter.moacir.com",
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.3.0"
   }
 }

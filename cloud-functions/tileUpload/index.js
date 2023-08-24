@@ -1,8 +1,8 @@
-const functions = require("@google-cloud/functions-framework");
+import functions from "@google-cloud/functions-framework";
 
 // Register a CloudEvent callback with the Functions Framework that will
 // be triggered by Cloud Storage.
-functions.cloudEvent("tileUpload", (cloudEvent) => {
+export const tileUpload = functions.cloudEvent("tileUpload", (cloudEvent) => {
   console.log(`Event ID: ${cloudEvent.id}`);
   console.log(`Event Type: ${cloudEvent.type}`);
 
