@@ -7,7 +7,7 @@
   "main": "index.js",
   "scripts": {
     "start": "pnpx functions-framework --target=tileUpload --signature-type=cloudevent",
-    "deploy": "gcloud functions deploy tileUpload --gen2 --runtime=nodejs18 --region=us-east4 --source . --trigger-event-filters='type=google.cloud.storage.object.v1.finalized' --trigger-even-filters='bucket=antirubberserver-uploads'"
+    "deploy": "gcloud functions deploy tileUpload --gen2 --runtime=nodejs18 --region=us-east4 --source . --trigger-event-filters='type=google.cloud.storage.object.v1.finalized' --trigger-event-filters='bucket=antirubberserver-uploads'"
   },
   "volta": {
     "extends": "../../package.json"
