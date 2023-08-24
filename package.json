@@ -5,12 +5,8 @@
     "dev:ember": "yarn workspace antirubbersheeter start",
     "dev:express": "yarn workspace antirubberserver dev",
     "build": "yarn workspaces build",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "yarn workspace antirubberserver start",
-    "predeploy:ember": "yarn workspace antirubbersheeter build:deploy",
-    "predeploy:express": "yarn workspace antirubberserver build:deploy",
-    "predeploy": "npm-run-all predeploy:ember",
-    "deploy": "gcloud app deploy"
+    "predeploy:ember": "yarn workspace antirubbersheeter build:deploy"
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
