@@ -7,10 +7,7 @@ export const tileUpload = functions.cloudEvent("tileUpload", (cloudEvent) => {
   console.log(`Event Type: ${cloudEvent.type}`);
 
   const file = cloudEvent.data;
-  console.log(`Bucket: ${file.bucket}`);
-  console.log(`File: ${file.name}`);
-  console.log(`Metageneration: ${file.metageneration}`);
-  console.log(`Created: ${file.timeCreated}`);
-  console.log(`Updated: ${file.updated}`);
+  const pathArray = file.name.split("/");
+  const fileName = pathArray[pathArray.length - 1];
 });
 // [END functions_cloudevent_storage]
